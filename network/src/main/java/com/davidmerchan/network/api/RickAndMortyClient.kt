@@ -1,6 +1,5 @@
 package com.davidmerchan.network.api
 
-import android.content.Context
 import io.ktor.client.HttpClient
 import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.HttpTimeout
@@ -49,7 +48,7 @@ object RickAndMortyClient {
 
         // Logging
         install(Logging) {
-            level = LogLevel.INFO // o ALL en debug
+            level = LogLevel.ALL // o ALL en debug
             logger = Logger.DEFAULT
         }
     }

@@ -6,6 +6,7 @@ import com.davidmerchan.domain.useCase.GetCharacterUseCase
 import com.davidmerchan.presentation.detail.state.CharacterDetailContract
 import com.davidmerchan.presentation.utils.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -24,7 +25,12 @@ class CharacterDetailViewModel @Inject constructor(
 
     private fun fetchData(id: CharacterId) {
         viewModelScope.launch {
-            getCharacterDetailUseCase(id)
+            _state.update { it.copy(isLoading = true) }
+            getCharacterDetailUseCase(id).onSuccess {
+                _state.update { it.copy(isLoading = false, data = it.data) }
+            }.onFailure {
+                channelEffect.send(CharacterDetailContract.Effect.ShowError)
+            }
         }
     }
 }

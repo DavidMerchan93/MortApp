@@ -13,7 +13,11 @@ import androidx.compose.ui.unit.dp
 import com.davidmerchan.presentation.home.model.CharacterUiModel
 
 @Composable
-fun CharactersListComponent(modifier: Modifier = Modifier, characters: List<CharacterUiModel>) {
+fun CharactersListComponent(
+    modifier: Modifier = Modifier,
+    characters: List<CharacterUiModel>,
+    onCharacterClick: (Int) -> Unit = {}
+) {
     val state = rememberLazyStaggeredGridState()
 
     LazyVerticalStaggeredGrid(
@@ -24,8 +28,11 @@ fun CharactersListComponent(modifier: Modifier = Modifier, characters: List<Char
         contentPadding = PaddingValues(12.dp),
         modifier = modifier.fillMaxSize()
     ) {
-        items(items = characters, key = { it.id }) {
-            CharacterCardComponent(character = it, onPress = {})
+        items(items = characters, key = { it.id }) { character ->
+            CharacterCardComponent(
+                character = character,
+                onPress = { onCharacterClick(character.id) }
+            )
         }
     }
 }

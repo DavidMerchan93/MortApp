@@ -61,6 +61,9 @@ dependencies {
     // Lottie
     implementation(libs.lottie.compose)
 
+    // Navigation
+    implementation(libs.androidx.navigation.compose)
+
     // Hilt
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)

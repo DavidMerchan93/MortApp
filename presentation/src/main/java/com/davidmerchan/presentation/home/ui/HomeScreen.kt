@@ -18,7 +18,10 @@ import com.davidmerchan.presentation.home.viewModel.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(
+    modifier: Modifier = Modifier,
+    onCharacterClick: (Int) -> Unit = {}
+) {
     val viewModel = hiltViewModel<HomeViewModel>()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -41,7 +44,10 @@ fun HomeScreen(modifier: Modifier = Modifier) {
             if (state.isLoading) {
                 LoaderComponent()
             } else {
-                CharactersListComponent(characters = state.data)
+                CharactersListComponent(
+                    characters = state.data,
+                    onCharacterClick = onCharacterClick
+                )
             }
         }
     }
