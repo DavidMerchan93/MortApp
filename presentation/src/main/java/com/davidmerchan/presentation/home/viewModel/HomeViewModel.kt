@@ -3,9 +3,9 @@ package com.davidmerchan.presentation.home.viewModel
 import androidx.lifecycle.viewModelScope
 import com.davidmerchan.domain.useCase.GetAllCharactersUseCase
 import com.davidmerchan.presentation.home.state.HomeStateContract
+import com.davidmerchan.presentation.mapper.toPresentation
 import com.davidmerchan.presentation.utils.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -36,7 +36,7 @@ internal class HomeViewModel @Inject constructor(
                 _state.update { state ->
                     state.copy(
                         isLoading = false,
-                        data = response.map { it.name }
+                        data = response.map { it.toPresentation() }
                     )
                 }
             }.onFailure {
