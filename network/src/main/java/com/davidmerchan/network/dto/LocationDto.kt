@@ -4,11 +4,11 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class LocationDto(
-    val id: Int,
-    val name: String,
-    val created: String,
-    val dimension: String,
-    val residents: List<String>,
-    val type: String,
-    val url: String
+    val id: Int? = null,
+    val name: String? = null,
+    val created: String? = null,
+    val dimension: String? = null,
+    val residents: List<String>? = emptyList(),
+    val type: String? = null,
+    val url: String? = null
 )

@@ -57,7 +57,8 @@ dependencies {
     
     // Domain module
     implementation(project(":domain"))
-    
+    implementation(project(":network"))
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

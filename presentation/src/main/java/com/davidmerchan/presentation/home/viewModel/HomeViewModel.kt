@@ -6,13 +6,14 @@ import com.davidmerchan.presentation.home.state.HomeStateContract
 import com.davidmerchan.presentation.utils.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
     private val getAllCharactersUseCase: GetAllCharactersUseCase
-): BaseViewModel<HomeStateContract.State, HomeStateContract.Effect>(
+) : BaseViewModel<HomeStateContract.State, HomeStateContract.Effect>(
     initialState = HomeStateContract.State()
 ) {
 
@@ -22,16 +23,25 @@ internal class HomeViewModel @Inject constructor(
     }
 
     fun handleEvent(event: HomeStateContract.Event) {
-        when(event){
+        when (event) {
             HomeStateContract.Event.FetchData -> fetchData()
         }
     }
 
     private fun fetchData() {
         viewModelScope.launch {
-            _state.value = _state.value.copy(isLoading = true)
-            delay(3_000)
-            _state.value = _state.value.copy(isLoading = false)
+            _state.update { it.copy(isLoading = true) }
+
+            getAllCharactersUseCase().onSuccess { response ->
+                _state.update { state ->
+                    state.copy(
+                        isLoading = false,
+                        data = response.map { it.name }
+                    )
+                }
+            }.onFailure {
+                channelEffect.send(HomeStateContract.Effect.ShowError)
+            }
         }
     }
 }

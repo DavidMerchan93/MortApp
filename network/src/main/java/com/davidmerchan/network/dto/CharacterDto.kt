@@ -10,10 +10,16 @@ data class CharacterDto(
     val created: String,
     val episode: List<String>,
     val gender: String,
-    val location: LocationDto,
-    val origin: LocationDto,
+    val location: LocationCharacterDto,
+    val origin: LocationCharacterDto,
     val species: String,
     val status: String,
     val type: String,
+    val url: String
+)
+
+@Serializable
+data class LocationCharacterDto(
+    val name: String,
     val url: String
 )

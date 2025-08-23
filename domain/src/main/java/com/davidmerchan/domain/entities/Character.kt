@@ -1,16 +1,23 @@
 package com.davidmerchan.domain.entities
 
+typealias CharacterId = Int
+
 data class Character(
-    val id: Int,
+    val id: CharacterId,
     val name: String,
     val image: String,
     val created: String,
     val episode: List<String>,
     val gender: String,
-    val location: Location,
-    val origin: Location,
+    val location: LocationCharacter,
+    val origin: LocationCharacter,
     val species: String,
     val status: String,
     val type: String,
+    val url: String
+)
+
+data class LocationCharacter(
+    val name: String,
     val url: String
 )
