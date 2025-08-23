@@ -2,7 +2,9 @@ package com.davidmerchan.domain.di
 
 import com.davidmerchan.domain.repository.CharactersRepository
 import com.davidmerchan.domain.useCase.GetAllCharactersUseCase
+import com.davidmerchan.domain.useCase.GetCharacterUseCase
 import com.davidmerchan.domain.useCase.getAllCharacters
+import com.davidmerchan.domain.useCase.getCharacter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,5 +18,11 @@ object UseCaseModule {
     @Singleton
     fun provideGetAllCharactersUseCase(charactersRepository: CharactersRepository): GetAllCharactersUseCase {
         return GetAllCharactersUseCase { getAllCharacters(charactersRepository) }
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetCharacterUseCase(charactersRepository: CharactersRepository): GetCharacterUseCase {
+        return GetCharacterUseCase { id -> getCharacter(charactersRepository, id) }
     }
 }

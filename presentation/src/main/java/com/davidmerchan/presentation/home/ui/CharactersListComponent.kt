@@ -1,0 +1,31 @@
+package com.davidmerchan.presentation.home.ui
+
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.davidmerchan.presentation.home.model.CharacterUiModel
+
+@Composable
+fun CharactersListComponent(modifier: Modifier = Modifier, characters: List<CharacterUiModel>) {
+    val state = rememberLazyStaggeredGridState()
+
+    LazyVerticalStaggeredGrid(
+        columns = StaggeredGridCells.Fixed(2),
+        state = state,
+        verticalItemSpacing = 12.dp,
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        contentPadding = PaddingValues(12.dp),
+        modifier = modifier.fillMaxSize()
+    ) {
+        items(items = characters, key = { it.id }) {
+            CharacterCardComponent(character = it, onPress = {})
+        }
+    }
+}

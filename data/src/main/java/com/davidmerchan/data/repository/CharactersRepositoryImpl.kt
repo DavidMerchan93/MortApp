@@ -29,8 +29,10 @@ class CharactersRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getCharacter(id: Int): Character? {
-        TODO("Not yet implemented")
+    override suspend fun getCharacter(id: Int): Result<Character> {
+        return safeApiCall {
+            api.getCharacter(id).toDomain()
+        }
     }
 
     override suspend fun getFavoriteCharacters(): List<Character> {

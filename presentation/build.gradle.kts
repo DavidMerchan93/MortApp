@@ -58,6 +58,9 @@ dependencies {
     // Coil
     implementation(libs.coil.compose)
 
+    // Lottie
+    implementation(libs.lottie.compose)
+
     // Hilt
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)

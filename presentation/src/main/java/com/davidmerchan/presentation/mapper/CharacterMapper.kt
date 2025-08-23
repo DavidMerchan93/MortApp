@@ -8,8 +8,6 @@ internal fun Character.toPresentation(): CharacterUiModel {
         id = id,
         name = name,
         image = image,
-        status = status,
-        gender = gender,
         isFavorite = isFavorite
     )
 }
