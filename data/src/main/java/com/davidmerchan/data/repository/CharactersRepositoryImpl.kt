@@ -1,20 +1,31 @@
 package com.davidmerchan.data.repository
 
+import com.davidmerchan.data.mapper.toDatabaseEntity
 import com.davidmerchan.data.mapper.toDomain
+import com.davidmerchan.database.dao.CharacterDao
+import com.davidmerchan.domain.entities.Character
 import com.davidmerchan.domain.repository.CharactersRepository
 import com.davidmerchan.network.api.RickAndMortyApi
 import com.davidmerchan.network.api.safeApiCall
 import javax.inject.Inject
-import com.davidmerchan.domain.entities.Character
 
 class CharactersRepositoryImpl @Inject constructor(
-    private val api: RickAndMortyApi
+    private val api: RickAndMortyApi,
+    private val database: CharacterDao
 ) : CharactersRepository {
-    override suspend fun getAllCharacters(): Result<List<Character>> {
+    override suspend fun getAllCharacters(hasSaveLocal: Boolean): Result<List<Character>> {
         return safeApiCall {
-            api.getAllCharacters()
-        }.map { item ->
-            item.results.map { it.toDomain() }
+            val characters = database.getAllCharacters().map { it.toDomain() }
+
+            if (hasSaveLocal || characters.isEmpty()) {
+                val results = api.getAllCharacters().results
+                database.insertCharacters(
+                    results.map { it.toDatabaseEntity() }
+                )
+                results.map { it.toDomain() }
+            } else {
+                characters
+            }
         }
     }
 
