@@ -1,5 +1,8 @@
 package com.davidmerchan.network.dto
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class CharacterDto(
     val id: Int,
     val name: String,

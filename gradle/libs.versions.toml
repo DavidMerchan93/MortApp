@@ -15,7 +15,7 @@ hilt = "2.57.1"
 hiltNavigationCompose = "1.2.0"
 coil = "2.7.0"
 serialization = "1.9.0"
-googleFonts = "1.8.0"
+googleFonts = "1.9.0"
 viewModelCompose = "2.9.2"
 
 [libraries]
