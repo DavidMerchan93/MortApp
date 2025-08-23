@@ -8,7 +8,7 @@ sealed class NavigationRoutes {
     data object Home : NavigationRoutes()
 
     @Serializable
-    data class CharacterDetail(val id: CharacterId) : NavigationRoutes()
+    data class CharacterDetail(val characterId: CharacterId) : NavigationRoutes()
 
     @Serializable
     data object Favorites : NavigationRoutes()

@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.davidmerchan.domain.entities.CharacterId
@@ -34,4 +35,18 @@ fun CharacterCardComponent(
                 .fillMaxWidth()
         )
     }
+}
+
+@Preview
+@Composable
+private fun CharacterCardComponentPreview() {
+    CharacterCardComponent(
+        character = CharacterUiModel(
+            id = 1,
+            name = "",
+            image = "https://rickandmortyapi.com/api/character/1",
+            isFavorite = false,
+        ),
+        onPress = {}
+    )
 }

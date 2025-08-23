@@ -4,6 +4,7 @@ import androidx.lifecycle.viewModelScope
 import com.davidmerchan.domain.entities.CharacterId
 import com.davidmerchan.domain.useCase.GetCharacterUseCase
 import com.davidmerchan.presentation.detail.state.CharacterDetailContract
+import com.davidmerchan.presentation.mapper.toDetailPresentation
 import com.davidmerchan.presentation.utils.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.update
@@ -27,7 +28,12 @@ class CharacterDetailViewModel @Inject constructor(
         viewModelScope.launch {
             _state.update { it.copy(isLoading = true) }
             getCharacterDetailUseCase(id).onSuccess {
-                _state.update { it.copy(isLoading = false, data = it.data) }
+                _state.update { state ->
+                    state.copy(
+                        isLoading = false,
+                        data = it.toDetailPresentation()
+                    )
+                }
             }.onFailure {
                 channelEffect.send(CharacterDetailContract.Effect.ShowError)
             }

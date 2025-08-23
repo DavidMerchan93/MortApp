@@ -24,7 +24,7 @@ import com.davidmerchan.presentation.detail.viewModel.CharacterDetailViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CharacterDetailScreen(
+internal fun CharacterDetailScreen(
     modifier: Modifier = Modifier,
     characterId: CharacterId,
     onBackPressed: () -> Unit = {}
@@ -59,13 +59,19 @@ fun CharacterDetailScreen(
                 .fillMaxSize()
                 .padding(contentPadding)
         ) {
+            when {
+                state.isLoading -> {
+                    LoaderComponent()
+                }
 
-            if (state.isLoading) {
-                LoaderComponent()
-            } else {
-                Text(text = state.data?.name.orEmpty())
+                (state.data != null) -> {
+                    CharacterDetailCard(character = state.data!!)
+                }
+
+                state.isError -> {
+                    Text(text = "Error")
+                }
             }
-
         }
     }
 }

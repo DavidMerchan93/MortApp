@@ -9,14 +9,16 @@ import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.foundation.lazy.staggeredgrid.rememberLazyStaggeredGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.davidmerchan.domain.entities.CharacterId
 import com.davidmerchan.presentation.home.model.CharacterUiModel
 
 @Composable
 fun CharactersListComponent(
     modifier: Modifier = Modifier,
     characters: List<CharacterUiModel>,
-    onCharacterClick: (Int) -> Unit = {}
+    onCharacterClick: (CharacterId) -> Unit = {}
 ) {
     val state = rememberLazyStaggeredGridState()
 
@@ -35,4 +37,19 @@ fun CharactersListComponent(
             )
         }
     }
+}
+
+@Preview
+@Composable
+private fun CharactersListComponentPreview() {
+    CharactersListComponent(
+        characters = listOf(
+            CharacterUiModel(
+                id = 1,
+                name = "",
+                image = "https://rickandmortyapi.com/api/character/1",
+                isFavorite = false,
+            )
+        )
+    )
 }

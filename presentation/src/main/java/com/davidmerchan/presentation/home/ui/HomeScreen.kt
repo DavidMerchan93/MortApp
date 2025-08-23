@@ -11,8 +11,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.davidmerchan.domain.entities.CharacterId
 import com.davidmerchan.presentation.components.LoaderComponent
 import com.davidmerchan.presentation.home.viewModel.HomeViewModel
 
@@ -20,7 +22,7 @@ import com.davidmerchan.presentation.home.viewModel.HomeViewModel
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    onCharacterClick: (Int) -> Unit = {}
+    onCharacterClick: (CharacterId) -> Unit = {}
 ) {
     val viewModel = hiltViewModel<HomeViewModel>()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -51,4 +53,10 @@ fun HomeScreen(
             }
         }
     }
+}
+
+@Preview
+@Composable
+private fun HomeScreenPreview() {
+    HomeScreen()
 }

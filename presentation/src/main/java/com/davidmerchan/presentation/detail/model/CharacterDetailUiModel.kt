@@ -8,5 +8,8 @@ data class CharacterDetailUiModel(
     val image: String,
     val status: String,
     val gender: String,
+    val location: String,
+    val origin: String,
+    val species: String,
     val isFavorite: Boolean
 )

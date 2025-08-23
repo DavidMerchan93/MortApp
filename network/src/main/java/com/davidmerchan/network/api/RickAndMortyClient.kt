@@ -5,7 +5,7 @@ import io.ktor.client.engine.android.Android
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.defaultRequest
-import io.ktor.client.plugins.logging.DEFAULT
+import io.ktor.client.plugins.logging.ANDROID
 import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logger
 import io.ktor.client.plugins.logging.Logging
@@ -25,7 +25,6 @@ object RickAndMortyClient {
             json(Json {
                 coerceInputValues = true
                 ignoreUnknownKeys = true
-                explicitNulls = false
                 isLenient = true
             })
         }
@@ -48,8 +47,9 @@ object RickAndMortyClient {
 
         // Logging
         install(Logging) {
-            level = LogLevel.ALL // o ALL en debug
-            logger = Logger.DEFAULT
+            logger = Logger.ANDROID
+            level = LogLevel.BODY
+            sanitizeHeader { it.equals(HttpHeaders.Authorization, ignoreCase = true) }
         }
     }
 }
