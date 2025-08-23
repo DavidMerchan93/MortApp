@@ -1,5 +1,5 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
@@ -8,17 +8,14 @@ plugins {
 }
 
 android {
-    namespace = "com.davidmerchan.mortapp"
+    namespace = "com.davidmerchan.presentation"
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.davidmerchan.mortapp"
         minSdk = 26
-        targetSdk = 36
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -37,9 +34,6 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
-    buildFeatures {
-        compose = true
-    }
 }
 
 dependencies {
@@ -52,7 +46,18 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-    
+
+    implementation(project(":domain"))
+
+    // ViewModel
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    // Google Fonts
+    implementation(libs.androidx.compose.ui.text.google.fonts)
+
+    // Coil
+    implementation(libs.coil.compose)
+
     // Hilt
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
@@ -60,12 +65,12 @@ dependencies {
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)
-    
-    // Data module
+
+    // Presentation
     implementation(project(":domain"))
     implementation(project(":data"))
-    implementation(project(":presentation"))
-    
+
+    // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
