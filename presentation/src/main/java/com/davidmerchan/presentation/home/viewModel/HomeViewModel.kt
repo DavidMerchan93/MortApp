@@ -1,9 +1,12 @@
 package com.davidmerchan.presentation.home.viewModel
 
+import androidx.lifecycle.viewModelScope
 import com.davidmerchan.domain.useCase.GetAllCharactersUseCase
 import com.davidmerchan.presentation.home.state.HomeStateContract
 import com.davidmerchan.presentation.utils.BaseViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -13,9 +16,22 @@ internal class HomeViewModel @Inject constructor(
     initialState = HomeStateContract.State()
 ) {
 
+    override fun start() {
+        super.start()
+        fetchData()
+    }
+
     fun handleEvent(event: HomeStateContract.Event) {
         when(event){
-            else -> Unit
+            HomeStateContract.Event.FetchData -> fetchData()
+        }
+    }
+
+    private fun fetchData() {
+        viewModelScope.launch {
+            _state.value = _state.value.copy(isLoading = true)
+            delay(3_000)
+            _state.value = _state.value.copy(isLoading = false)
         }
     }
 }

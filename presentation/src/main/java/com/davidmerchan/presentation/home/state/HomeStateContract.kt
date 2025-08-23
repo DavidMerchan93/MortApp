@@ -6,7 +6,9 @@ internal sealed interface HomeStateContract {
         val data: List<String>? = null
     )
 
-    sealed interface Event {}
+    sealed interface Event {
+        object FetchData : Event
+    }
 
     sealed interface Effect {}
 }

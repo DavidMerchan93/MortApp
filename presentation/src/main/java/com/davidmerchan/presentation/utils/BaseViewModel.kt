@@ -9,10 +9,10 @@ import kotlinx.coroutines.flow.receiveAsFlow
 
 abstract class BaseViewModel<State, Effect>(
     initialState: State
-): ViewModel() {
+) : ViewModel() {
     protected val _state = MutableStateFlow(initialState)
-    val state: StateFlow<State> = _state
-        .stateInWhileSubscribed(scope = viewModelScope, initialValue = initialState){
+    val uiState: StateFlow<State> = _state
+        .stateInWhileSubscribed(scope = viewModelScope, initialValue = initialState) {
             start()
         }
 

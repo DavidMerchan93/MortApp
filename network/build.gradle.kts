@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.davidmerchan.domain"
+    namespace = "com.davidmerchan.network"
     compileSdk = 36
 
     defaultConfig {
@@ -40,13 +40,10 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
 
-    implementation(project(":core"))
-    
     // Hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization.json)
 }

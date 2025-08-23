@@ -4,7 +4,7 @@ import com.davidmerchan.domain.repository.CharactersRepository
 import javax.inject.Inject
 
 class CharactersRepositoryImpl @Inject constructor(): CharactersRepository {
-    override suspend fun getAllCharacters(): Result<List<Character>> {
+    override suspend fun getAllCharacters(): List<Character> {
         TODO("Not yet implemented")
     }
 
