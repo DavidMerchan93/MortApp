@@ -4,6 +4,7 @@ import com.davidmerchan.data.mapper.toDatabaseEntity
 import com.davidmerchan.data.mapper.toDomain
 import com.davidmerchan.database.dao.CharacterDao
 import com.davidmerchan.domain.entities.Character
+import com.davidmerchan.domain.entities.CharacterId
 import com.davidmerchan.domain.repository.CharactersRepository
 import com.davidmerchan.network.api.RickAndMortyApi
 import com.davidmerchan.network.api.safeApiCall
@@ -39,11 +40,11 @@ class CharactersRepositoryImpl @Inject constructor(
         TODO("Not yet implemented")
     }
 
-    override suspend fun saveCharacterFavorite(character: Character) {
-        TODO("Not yet implemented")
+    override suspend fun saveCharacterFavorite(id: CharacterId) {
+        database.updateFavoriteStatus(id, true)
     }
 
-    override suspend fun removeCharacterFavorite(character: Character) {
-        TODO("Not yet implemented")
+    override suspend fun removeCharacterFavorite(id: CharacterId) {
+        database.updateFavoriteStatus(id, false)
     }
 }

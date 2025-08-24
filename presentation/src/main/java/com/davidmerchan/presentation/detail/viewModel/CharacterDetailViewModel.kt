@@ -3,6 +3,8 @@ package com.davidmerchan.presentation.detail.viewModel
 import androidx.lifecycle.viewModelScope
 import com.davidmerchan.domain.entities.CharacterId
 import com.davidmerchan.domain.useCase.GetCharacterUseCase
+import com.davidmerchan.domain.useCase.RemoveCharacterFavoriteUseCase
+import com.davidmerchan.domain.useCase.SaveCharacterFavoriteUseCase
 import com.davidmerchan.presentation.detail.state.CharacterDetailContract
 import com.davidmerchan.presentation.mapper.toDetailPresentation
 import com.davidmerchan.presentation.utils.BaseViewModel
@@ -14,6 +16,8 @@ import javax.inject.Inject
 @HiltViewModel
 class CharacterDetailViewModel @Inject constructor(
     private val getCharacterDetailUseCase: GetCharacterUseCase,
+    private val saveCharacterFavoriteUseCase: SaveCharacterFavoriteUseCase,
+    private val removeCharacterFavoriteUseCase: RemoveCharacterFavoriteUseCase
 ) : BaseViewModel<CharacterDetailContract.State, CharacterDetailContract.Effect>(
     CharacterDetailContract.State()
 ) {
@@ -21,6 +25,7 @@ class CharacterDetailViewModel @Inject constructor(
     fun handleEvent(event: CharacterDetailContract.Event) {
         when (event) {
             is CharacterDetailContract.Event.FetchData -> fetchData(event.id)
+            is CharacterDetailContract.Event.UpdateFavorite -> updateFavoriteState()
         }
     }
 
@@ -36,6 +41,68 @@ class CharacterDetailViewModel @Inject constructor(
                 }
             }.onFailure {
                 channelEffect.send(CharacterDetailContract.Effect.ShowError)
+            }
+        }
+    }
+
+    private fun updateFavoriteState() {
+        val currentState = _state.value.data
+
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+
+            if (currentState?.isFavorite == true) {
+                removeFavorite()
+            } else {
+                saveFavorite()
+            }
+        }
+    }
+
+    private fun saveFavorite() {
+        val currentState = _state.value.data
+
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+
+            saveCharacterFavoriteUseCase(currentState?.id!!).onSuccess {
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        data = currentState?.copy(isFavorite = true)
+                    )
+                }
+            }.onFailure {
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        data = currentState?.copy(isFavorite = currentState.isFavorite)
+                    )
+                }
+            }
+        }
+    }
+
+    private fun removeFavorite() {
+        val currentState = _state.value.data
+
+        viewModelScope.launch {
+            _state.update { it.copy(isLoading = true) }
+
+            removeCharacterFavoriteUseCase(currentState?.id!!).onSuccess {
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        data = currentState.copy(isFavorite = false)
+                    )
+                }
+            }.onFailure {
+                _state.update {
+                    it.copy(
+                        isLoading = false,
+                        data = currentState.copy(isFavorite = currentState.isFavorite)
+                    )
+                }
             }
         }
     }

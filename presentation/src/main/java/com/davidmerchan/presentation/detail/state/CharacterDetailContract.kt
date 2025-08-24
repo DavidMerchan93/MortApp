@@ -12,6 +12,7 @@ sealed interface CharacterDetailContract {
 
     sealed interface Event {
         data class FetchData(val id: CharacterId) : Event
+        object UpdateFavorite : Event
     }
 
     sealed interface Effect {

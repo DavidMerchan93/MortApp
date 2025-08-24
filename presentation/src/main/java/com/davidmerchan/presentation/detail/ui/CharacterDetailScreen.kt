@@ -65,7 +65,11 @@ internal fun CharacterDetailScreen(
                 }
 
                 (state.data != null) -> {
-                    CharacterDetailCard(character = state.data!!)
+                    CharacterDetailCard(character = state.data!!, onFavoriteClick = {
+                        viewModel.handleEvent(
+                            CharacterDetailContract.Event.UpdateFavorite
+                        )
+                    })
                 }
 
                 state.isError -> {

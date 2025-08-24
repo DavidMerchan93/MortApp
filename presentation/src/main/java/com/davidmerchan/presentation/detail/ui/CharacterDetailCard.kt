@@ -1,5 +1,6 @@
 package com.davidmerchan.presentation.detail.ui
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,10 +10,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Place
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,8 +30,9 @@ import com.davidmerchan.presentation.detail.model.CharacterDetailUiModel
 
 @Composable
 internal fun CharacterDetailCard(
+    modifier: Modifier = Modifier,
     character: CharacterDetailUiModel,
-    modifier: Modifier = Modifier
+    onFavoriteClick: () -> Unit
 ) {
     ElevatedCard(modifier = modifier) {
         AsyncImage(
@@ -42,12 +47,26 @@ internal fun CharacterDetailCard(
         )
 
         Column(Modifier.padding(16.dp)) {
-            Text(
-                text = character.name,
-                style = MaterialTheme.typography.headlineSmall,
-                maxLines = 2,
-                overflow = TextOverflow.Ellipsis
-            )
+            Row {
+                Text(
+                    text = character.name,
+                    style = MaterialTheme.typography.headlineSmall,
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.weight(1f)
+                )
+
+                Icon(
+                    imageVector = if (character.isFavorite) {
+                        Icons.Default.Favorite
+                    } else {
+                        Icons.Default.FavoriteBorder
+                    },
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier.clickable { onFavoriteClick() }
+                )
+            }
 
             Spacer(Modifier.height(8.dp))
 
