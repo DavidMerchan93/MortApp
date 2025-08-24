@@ -20,18 +20,18 @@ import androidx.compose.ui.unit.dp
 internal fun InfoRow(
     icon: ImageVector,
     label: String,
-    value: String
+    value: String,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.width(12.dp))
         Text(
             "$label: ",
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Text(value, style = MaterialTheme.typography.bodyMedium)
     }
@@ -43,6 +43,6 @@ private fun InfoRowPreview() {
     InfoRow(
         icon = Icons.Default.Place,
         label = "Origen",
-        value = "Earth (C-137)"
+        value = "Earth (C-137)",
     )
 }

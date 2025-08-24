@@ -28,86 +28,97 @@ class FavoritesViewModelTest {
     private val testDispatcher = UnconfinedTestDispatcher()
 
     @Test
-    fun `when getFavoriteCharacters succeeds then state shows characters`() = runTest {
-        // Given
-        val expectedCharacters = listOf(
-            Character(
-                id = 1,
-                name = "Rick Sanchez",
-                image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
-                created = "2017-11-04T18:48:46.250Z",
-                episode = listOf("https://rickandmortyapi.com/api/episode/1"),
-                gender = "Male",
-                location = LocationCharacter("Earth", "https://rickandmortyapi.com/api/location/1"),
-                origin = LocationCharacter("Earth", "https://rickandmortyapi.com/api/location/1"),
-                species = "Human",
-                status = "Alive",
-                type = "",
-                url = "https://rickandmortyapi.com/api/character/1",
-                isFavorite = true
-            )
-        )
-        coEvery { getFavoriteCharactersUseCase() } returns Result.success(expectedCharacters)
+    fun `when getFavoriteCharacters succeeds then state shows characters`() =
+        runTest {
+            // Given
+            val expectedCharacters =
+                listOf(
+                    Character(
+                        id = 1,
+                        name = "Rick Sanchez",
+                        image = "https://rickandmortyapi.com/api/character/avatar/1.jpeg",
+                        created = "2017-11-04T18:48:46.250Z",
+                        episode = listOf("https://rickandmortyapi.com/api/episode/1"),
+                        gender = "Male",
+                        location = LocationCharacter(
+                            "Earth",
+                            "https://rickandmortyapi.com/api/location/1"
+                        ),
+                        origin = LocationCharacter(
+                            "Earth",
+                            "https://rickandmortyapi.com/api/location/1"
+                        ),
+                        species = "Human",
+                        status = "Alive",
+                        type = "",
+                        url = "https://rickandmortyapi.com/api/character/1",
+                        isFavorite = true,
+                    ),
+                )
+            coEvery { getFavoriteCharactersUseCase() } returns Result.success(expectedCharacters)
 
-        // When
-        viewModel = FavoritesViewModel(getFavoriteCharactersUseCase).apply { stopTimeoutMillis = 0 }
+            // When
+            viewModel =
+                FavoritesViewModel(getFavoriteCharactersUseCase).apply { stopTimeoutMillis = 0 }
 
-        // Trigger the flow collection
-        viewModel.uiState.test {
-            // Advance coroutines to execute the start() method
-            advanceUntilIdle()
+            // Trigger the flow collection
+            viewModel.uiState.test {
+                // Advance coroutines to execute the start() method
+                advanceUntilIdle()
 
-            // Skip initial state and get the final state after loading
-            val finalState = awaitItem()
+                // Skip initial state and get the final state after loading
+                val finalState = awaitItem()
 
-            // Then - Should show success state
-            assertFalse(finalState.isLoading)
-            assertFalse(finalState.isError)
-            assertEquals(1, finalState.data.size)
-            assertEquals("Rick Sanchez", finalState.data.first().name)
+                // Then - Should show success state
+                assertFalse(finalState.isLoading)
+                assertFalse(finalState.isError)
+                assertEquals(1, finalState.data.size)
+                assertEquals("Rick Sanchez", finalState.data.first().name)
+            }
         }
-    }
 
     @Test
-    fun `when getFavoriteCharacters fails then state shows error`() = runTest {
-        // Given
-        val exception = Exception("Network error")
-        coEvery { getFavoriteCharactersUseCase() } returns Result.failure(exception)
+    fun `when getFavoriteCharacters fails then state shows error`() =
+        runTest {
+            // Given
+            val exception = Exception("Network error")
+            coEvery { getFavoriteCharactersUseCase() } returns Result.failure(exception)
 
-        // When
-        viewModel =
-            FavoritesViewModel(getFavoriteCharactersUseCase).apply { stopTimeoutMillis = 0L }
+            // When
+            viewModel =
+                FavoritesViewModel(getFavoriteCharactersUseCase).apply { stopTimeoutMillis = 0L }
 
-        // Then
-        viewModel.uiState.test {
-            advanceUntilIdle()
+            // Then
+            viewModel.uiState.test {
+                advanceUntilIdle()
 
-            // Now the implementation correctly sets isError = true in the state
-            val finalState = awaitItem()
-            assertFalse(finalState.isLoading)
-            assertTrue(finalState.isError)
-            assertTrue(finalState.data.isEmpty())
+                // Now the implementation correctly sets isError = true in the state
+                val finalState = awaitItem()
+                assertFalse(finalState.isLoading)
+                assertTrue(finalState.isError)
+                assertTrue(finalState.data.isEmpty())
+            }
         }
-    }
 
     @Test
-    fun `when handleEvent RefreshFavorites then fetchFavoriteCharacters is called`() = runTest {
-        // Given
-        coEvery { getFavoriteCharactersUseCase() } returns Result.success(emptyList())
-        viewModel = FavoritesViewModel(getFavoriteCharactersUseCase)
+    fun `when handleEvent RefreshFavorites then fetchFavoriteCharacters is called`() =
+        runTest {
+            // Given
+            coEvery { getFavoriteCharactersUseCase() } returns Result.success(emptyList())
+            viewModel = FavoritesViewModel(getFavoriteCharactersUseCase)
 
-        // Wait for initial load to complete
-        advanceUntilIdle()
+            // Wait for initial load to complete
+            advanceUntilIdle()
 
-        // When
-        viewModel.handleEvent(FavoritesStateContract.Event.RefreshFavorites)
-        advanceUntilIdle()
+            // When
+            viewModel.handleEvent(FavoritesStateContract.Event.RefreshFavorites)
+            advanceUntilIdle()
 
-        // Then
-        viewModel.uiState.test {
-            val state = awaitItem()
-            assertFalse(state.isLoading) // Should complete loading
-            assertTrue(state.data.isEmpty())
+            // Then
+            viewModel.uiState.test {
+                val state = awaitItem()
+                assertFalse(state.isLoading) // Should complete loading
+                assertTrue(state.data.isEmpty())
+            }
         }
-    }
 }

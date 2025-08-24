@@ -9,7 +9,7 @@ internal fun Character.toPresentation(): CharacterUiModel {
         id = id,
         name = name,
         image = image,
-        isFavorite = isFavorite
+        isFavorite = isFavorite,
     )
 }
 
@@ -23,6 +23,6 @@ internal fun Character.toDetailPresentation(): CharacterDetailUiModel {
         status = status,
         location = location.name,
         origin = origin.name,
-        species = species
+        species = species,
     )
 }

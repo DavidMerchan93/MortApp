@@ -44,4 +44,3 @@ inline fun <R, T> Result<T>.mapResult(transform: (value: T) -> R): Result<R> {
         else -> Result.failure(exceptionOrNull() ?: error("Unreachable state"))
     }
 }
-

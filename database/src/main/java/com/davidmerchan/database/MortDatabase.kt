@@ -8,10 +8,9 @@ import com.davidmerchan.database.entities.CharacterEntity
 @Database(
     entities = [CharacterEntity::class],
     version = 1,
-    exportSchema = false
+    exportSchema = false,
 )
 abstract class MortDatabase : RoomDatabase() {
-
     abstract fun characterDao(): CharacterDao
 
     companion object {

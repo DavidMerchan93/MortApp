@@ -11,6 +11,7 @@ interface FavoritesStateContract {
 
     sealed interface Event {
         data object FetchFavoriteCharacters : Event
+
         data object RefreshFavorites : Event
     }
 

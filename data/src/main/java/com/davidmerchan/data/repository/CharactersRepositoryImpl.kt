@@ -10,9 +10,11 @@ import com.davidmerchan.network.api.RickAndMortyApi
 import com.davidmerchan.network.api.safeApiCall
 import javax.inject.Inject
 
-class CharactersRepositoryImpl @Inject constructor(
+class CharactersRepositoryImpl
+@Inject
+constructor(
     private val api: RickAndMortyApi,
-    private val database: CharacterDao
+    private val database: CharacterDao,
 ) : CharactersRepository {
     override suspend fun getAllCharacters(isRefreshing: Boolean): Result<List<Character>> {
         return safeApiCall {
@@ -21,7 +23,7 @@ class CharactersRepositoryImpl @Inject constructor(
             if (isRefreshing || characters.isEmpty()) {
                 val results = api.getAllCharacters().results
                 database.insertCharacters(
-                    results.map { it.toDatabaseEntity() }
+                    results.map { it.toDatabaseEntity() },
                 )
                 results.map { it.toDomain() }
             } else {

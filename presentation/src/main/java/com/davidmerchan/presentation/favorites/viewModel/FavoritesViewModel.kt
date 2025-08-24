@@ -11,12 +11,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class FavoritesViewModel @Inject constructor(
-    private val getFavoriteCharactersUseCase: GetFavoriteCharactersUseCase
+class FavoritesViewModel
+@Inject
+constructor(
+    private val getFavoriteCharactersUseCase: GetFavoriteCharactersUseCase,
 ) : BaseViewModel<FavoritesStateContract.State>(
-    initialState = FavoritesStateContract.State()
+    initialState = FavoritesStateContract.State(),
 ) {
-
     override fun start() {
         super.start()
         fetchFavoriteCharacters()
@@ -35,24 +36,24 @@ class FavoritesViewModel @Inject constructor(
     }
 
     private fun fetchFavoriteCharacters() {
-        _state.update { currentState ->
+        state.update { currentState ->
             currentState.copy(isLoading = true, isError = false)
         }
 
         viewModelScope.launch {
             getFavoriteCharactersUseCase().onSuccess { characters ->
-                _state.update { currentState ->
+                state.update { currentState ->
                     currentState.copy(
                         isLoading = false,
                         data = characters.map { it.toPresentation() },
-                        isError = false
+                        isError = false,
                     )
                 }
             }.onFailure { throwable ->
-                _state.update { currentState ->
+                state.update { currentState ->
                     currentState.copy(
                         isLoading = false,
-                        isError = true
+                        isError = true,
                     )
                 }
             }

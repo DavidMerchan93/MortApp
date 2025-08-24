@@ -8,7 +8,7 @@ fun interface SaveCharacterFavoriteUseCase : suspend (CharacterId) -> Result<Uni
 
 suspend fun saveCharacterFavorite(
     id: CharacterId,
-    charactersRepository: CharactersRepository
+    charactersRepository: CharactersRepository,
 ) = resultOf {
     charactersRepository.saveCharacterFavorite(id)
 }

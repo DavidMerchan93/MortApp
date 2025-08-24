@@ -17,39 +17,41 @@ import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 
 object RickAndMortyClient {
-
     private const val BASE_URL = "https://rickandmortyapi.com/api/"
 
-    fun create(): HttpClient = HttpClient(Android) {
-        install(ContentNegotiation) {
-            json(Json {
-                coerceInputValues = true
-                ignoreUnknownKeys = true
-                isLenient = true
-            })
-        }
+    fun create(): HttpClient =
+        HttpClient(Android) {
+            install(ContentNegotiation) {
+                json(
+                    Json {
+                        coerceInputValues = true
+                        ignoreUnknownKeys = true
+                        isLenient = true
+                    },
+                )
+            }
 
-        // Base URL + headers por defecto
-        defaultRequest {
-            url(BASE_URL)
-            headers {
-                append(HttpHeaders.Accept, ContentType.Application.Json)
-                append(HttpHeaders.ContentType, ContentType.Application.Json)
+            // Base URL + headers por defecto
+            defaultRequest {
+                url(BASE_URL)
+                headers {
+                    append(HttpHeaders.Accept, ContentType.Application.Json)
+                    append(HttpHeaders.ContentType, ContentType.Application.Json)
+                }
+            }
+
+            // Timeouts
+            install(HttpTimeout) {
+                requestTimeoutMillis = 15_000
+                connectTimeoutMillis = 10_000
+                socketTimeoutMillis = 15_000
+            }
+
+            // Logging
+            install(Logging) {
+                logger = Logger.ANDROID
+                level = LogLevel.BODY
+                sanitizeHeader { it.equals(HttpHeaders.Authorization, ignoreCase = true) }
             }
         }
-
-        // Timeouts
-        install(HttpTimeout) {
-            requestTimeoutMillis = 15_000
-            connectTimeoutMillis = 10_000
-            socketTimeoutMillis  = 15_000
-        }
-
-        // Logging
-        install(Logging) {
-            logger = Logger.ANDROID
-            level = LogLevel.BODY
-            sanitizeHeader { it.equals(HttpHeaders.Authorization, ignoreCase = true) }
-        }
-    }
 }

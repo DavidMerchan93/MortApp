@@ -7,11 +7,12 @@ sealed interface CharacterDetailContract {
     data class State(
         val isLoading: Boolean = false,
         val data: CharacterDetailUiModel? = null,
-        val isError: Boolean = false
+        val isError: Boolean = false,
     )
 
     sealed interface Event {
         data class FetchData(val id: CharacterId) : Event
+
         object UpdateFavorite : Event
     }
 

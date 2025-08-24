@@ -18,7 +18,7 @@ import com.davidmerchan.presentation.home.model.CharacterUiModel
 fun CharactersListComponent(
     modifier: Modifier = Modifier,
     characters: List<CharacterUiModel>,
-    onCharacterClick: (CharacterId) -> Unit = {}
+    onCharacterClick: (CharacterId) -> Unit = {},
 ) {
     val state = rememberLazyStaggeredGridState()
 
@@ -28,12 +28,12 @@ fun CharactersListComponent(
         verticalItemSpacing = 12.dp,
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(12.dp),
-        modifier = modifier.fillMaxSize()
+        modifier = modifier.fillMaxSize(),
     ) {
         items(items = characters, key = { it.id }) { character ->
             CharacterCardComponent(
                 character = character,
-                onPress = { onCharacterClick(character.id) }
+                onPress = { onCharacterClick(character.id) },
             )
         }
     }
@@ -43,13 +43,14 @@ fun CharactersListComponent(
 @Composable
 private fun CharactersListComponentPreview() {
     CharactersListComponent(
-        characters = listOf(
-            CharacterUiModel(
-                id = 1,
-                name = "",
-                image = "https://rickandmortyapi.com/api/character/1",
-                isFavorite = false,
-            )
-        )
+        characters =
+            listOf(
+                CharacterUiModel(
+                    id = 1,
+                    name = "",
+                    image = "https://rickandmortyapi.com/api/character/1",
+                    isFavorite = false,
+                ),
+            ),
     )
 }

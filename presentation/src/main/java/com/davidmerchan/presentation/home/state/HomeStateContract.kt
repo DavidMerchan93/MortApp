@@ -15,6 +15,6 @@ internal sealed interface HomeStateContract {
     }
 
     sealed interface Effect {
-        object ShowError: Effect
+        object ShowError : Effect
     }
 }

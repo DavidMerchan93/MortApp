@@ -14,11 +14,12 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun StatusBadge(status: String) {
-    val color = when (status.lowercase()) {
-        "alive" -> MaterialTheme.colorScheme.primary
-        "dead" -> MaterialTheme.colorScheme.error
-        else -> MaterialTheme.colorScheme.outline
-    }
+    val color =
+        when (status.lowercase()) {
+            "alive" -> MaterialTheme.colorScheme.primary
+            "dead" -> MaterialTheme.colorScheme.error
+            else -> MaterialTheme.colorScheme.outline
+        }
     AssistChip(
         onClick = {},
         label = { Text(status) },
@@ -27,8 +28,8 @@ internal fun StatusBadge(status: String) {
                 Modifier
                     .size(10.dp)
                     .clip(CircleShape)
-                    .background(color)
+                    .background(color),
             )
-        }
+        },
     )
 }

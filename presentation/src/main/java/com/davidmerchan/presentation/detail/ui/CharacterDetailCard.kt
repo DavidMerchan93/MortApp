@@ -34,18 +34,20 @@ import com.davidmerchan.presentation.detail.model.CharacterDetailUiModel
 internal fun CharacterDetailCard(
     modifier: Modifier = Modifier,
     character: CharacterDetailUiModel,
-    onFavoriteClick: () -> Unit
+    onFavoriteClick: () -> Unit,
 ) {
     ElevatedCard(modifier = modifier) {
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(character.image)
-                .crossfade(true)
-                .build(),
+            model =
+                ImageRequest.Builder(LocalContext.current)
+                    .data(character.image)
+                    .crossfade(true)
+                    .build(),
             contentDescription = character.name,
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(1f)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(1f),
         )
 
         Column(Modifier.padding(16.dp)) {
@@ -55,18 +57,19 @@ internal fun CharacterDetailCard(
                     style = MaterialTheme.typography.headlineSmall,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
                 )
 
                 Icon(
-                    imageVector = if (character.isFavorite) {
-                        Icons.Default.Favorite
-                    } else {
-                        Icons.Default.FavoriteBorder
-                    },
+                    imageVector =
+                        if (character.isFavorite) {
+                            Icons.Default.Favorite
+                        } else {
+                            Icons.Default.FavoriteBorder
+                        },
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.clickable { onFavoriteClick() }
+                    modifier = Modifier.clickable { onFavoriteClick() },
                 )
             }
 
@@ -83,12 +86,12 @@ internal fun CharacterDetailCard(
             InfoRow(
                 icon = Icons.Default.Place,
                 label = stringResource(R.string.title_origin),
-                value = character.origin
+                value = character.origin,
             )
             InfoRow(
                 icon = Icons.Default.Person,
                 label = stringResource(R.string.title_location),
-                value = character.location
+                value = character.location,
             )
         }
     }

@@ -11,12 +11,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-internal class HomeViewModel @Inject constructor(
-    private val getAllCharactersUseCase: GetAllCharactersUseCase
+internal class HomeViewModel
+@Inject
+constructor(
+    private val getAllCharactersUseCase: GetAllCharactersUseCase,
 ) : BaseViewModel<HomeStateContract.State>(
-    initialState = HomeStateContract.State()
+    initialState = HomeStateContract.State(),
 ) {
-
     override fun start() {
         super.start()
         fetchData()
@@ -30,22 +31,22 @@ internal class HomeViewModel @Inject constructor(
 
     private fun fetchData(isRefreshing: Boolean = false) {
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true, isRefreshing = isRefreshing) }
+            state.update { it.copy(isLoading = true, isRefreshing = isRefreshing) }
 
             getAllCharactersUseCase(isRefreshing).onSuccess { response ->
-                _state.update { state ->
+                state.update { state ->
                     state.copy(
                         isLoading = false,
                         isRefreshing = false,
-                        data = response.map { it.toPresentation() }
+                        data = response.map { it.toPresentation() },
                     )
                 }
             }.onFailure {
-                _state.update { state ->
+                state.update { state ->
                     state.copy(
                         isLoading = false,
                         isRefreshing = false,
-                        isError = true
+                        isError = true,
                     )
                 }
             }

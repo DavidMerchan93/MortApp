@@ -14,17 +14,15 @@ import androidx.compose.ui.unit.dp
 import com.davidmerchan.presentation.R
 
 @Composable
-internal fun EmptyMessageComponent(
-    modifier: Modifier = Modifier,
-) {
+internal fun EmptyMessageComponent(modifier: Modifier = Modifier) {
     Column(
         modifier = modifier.padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = stringResource(R.string.message_no_data),
             style = MaterialTheme.typography.headlineSmall,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
     }
 }

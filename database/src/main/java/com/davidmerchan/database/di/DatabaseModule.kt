@@ -14,23 +14,20 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
-
     @Provides
     @Singleton
     fun provideMortDatabase(
-        @ApplicationContext context: Context
+        @ApplicationContext context: Context,
     ): MortDatabase {
         return Room.databaseBuilder(
             context,
             MortDatabase::class.java,
-            MortDatabase.DATABASE_NAME
+            MortDatabase.DATABASE_NAME,
         ).build()
     }
 
     @Provides
-    fun provideCharacterDao(
-        database: MortDatabase
-    ): CharacterDao {
+    fun provideCharacterDao(database: MortDatabase): CharacterDao {
         return database.characterDao()
     }
 }

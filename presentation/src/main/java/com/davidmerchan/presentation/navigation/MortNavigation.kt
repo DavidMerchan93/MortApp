@@ -10,23 +10,21 @@ import com.davidmerchan.presentation.favorites.ui.FavoritesScreen
 import com.davidmerchan.presentation.home.ui.HomeScreen
 
 @Composable
-fun MortNavigation(
-    navController: NavHostController
-) {
+fun MortNavigation(navController: NavHostController) {
     NavHost(
         navController = navController,
-        startDestination = NavigationRoutes.Home
+        startDestination = NavigationRoutes.Home,
     ) {
         composable<NavigationRoutes.Home> {
             HomeScreen(
                 onCharacterClick = { characterId ->
                     navController.navigate(
-                        NavigationRoutes.CharacterDetail(characterId)
+                        NavigationRoutes.CharacterDetail(characterId),
                     )
                 },
                 onFavoritesClick = {
                     navController.navigate(NavigationRoutes.Favorites)
-                }
+                },
             )
         }
 
@@ -36,7 +34,7 @@ fun MortNavigation(
                 characterId = character.characterId,
                 onBackPressed = {
                     navController.popBackStack()
-                }
+                },
             )
         }
 
@@ -44,12 +42,12 @@ fun MortNavigation(
             FavoritesScreen(
                 onCharacterClick = { characterId ->
                     navController.navigate(
-                        NavigationRoutes.CharacterDetail(characterId)
+                        NavigationRoutes.CharacterDetail(characterId),
                     )
                 },
                 onBackPressed = {
                     navController.popBackStack()
-                }
+                },
             )
         }
     }

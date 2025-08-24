@@ -17,6 +17,6 @@ object RepositoryModule {
     @Singleton
     fun provideCharactersRepository(
         api: RickAndMortyApi,
-        database: CharacterDao
+        database: CharacterDao,
     ): CharactersRepository = CharactersRepositoryImpl(api, database)
 }

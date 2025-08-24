@@ -34,36 +34,29 @@ object UseCaseModule {
 
     @Provides
     @Singleton
-    fun provideSaveCharacterFavoriteUseCase(
-        charactersRepository: CharactersRepository
-    ): SaveCharacterFavoriteUseCase {
+    fun provideSaveCharacterFavoriteUseCase(charactersRepository: CharactersRepository): SaveCharacterFavoriteUseCase {
         return SaveCharacterFavoriteUseCase { id ->
             saveCharacterFavorite(
                 id,
-                charactersRepository
+                charactersRepository,
             )
         }
     }
 
     @Provides
     @Singleton
-    fun provideRemoveCharacterFavoriteUseCase(
-        charactersRepository: CharactersRepository
-    ): RemoveCharacterFavoriteUseCase {
+    fun provideRemoveCharacterFavoriteUseCase(charactersRepository: CharactersRepository): RemoveCharacterFavoriteUseCase {
         return RemoveCharacterFavoriteUseCase { id ->
             removeCharacterFavorite(
                 id,
-                charactersRepository
+                charactersRepository,
             )
         }
     }
 
     @Provides
     @Singleton
-    fun provideGetFavoriteCharactersUseCase(
-        charactersRepository: CharactersRepository
-    ): GetFavoriteCharactersUseCase {
+    fun provideGetFavoriteCharactersUseCase(charactersRepository: CharactersRepository): GetFavoriteCharactersUseCase {
         return GetFavoriteCharactersUseCase { getFavoriteCharacters(charactersRepository) }
     }
-
 }

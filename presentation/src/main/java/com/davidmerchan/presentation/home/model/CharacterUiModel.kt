@@ -6,5 +6,5 @@ data class CharacterUiModel(
     val id: CharacterId,
     val name: String,
     val image: String,
-    val isFavorite: Boolean
+    val isFavorite: Boolean,
 )

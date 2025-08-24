@@ -23,18 +23,19 @@ fun PullToRefreshBox(
         Indicator(
             modifier = Modifier.align(Alignment.TopCenter),
             isRefreshing = isRefreshing,
-            state = state
+            state = state,
         )
     },
-    content: @Composable BoxScope.() -> Unit
+    content: @Composable BoxScope.() -> Unit,
 ) {
     Box(
-        modifier = modifier.pullToRefresh(
-            state = state,
-            isRefreshing = isRefreshing,
-            onRefresh = onRefresh
-        ),
-        contentAlignment = contentAlignment
+        modifier =
+            modifier.pullToRefresh(
+                state = state,
+                isRefreshing = isRefreshing,
+                onRefresh = onRefresh,
+            ),
+        contentAlignment = contentAlignment,
     ) {
         content()
         indicator()

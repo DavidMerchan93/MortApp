@@ -8,46 +8,32 @@ import androidx.room.PrimaryKey
 data class CharacterEntity(
     @PrimaryKey
     val id: Int,
-
     @ColumnInfo(name = "name")
     val name: String,
-
     @ColumnInfo(name = "image")
     val image: String,
-
     @ColumnInfo(name = "created")
     val created: String,
-
     @ColumnInfo(name = "episode")
-    val episode: String, // Stored as JSON string
-
+    val episode: String,
     @ColumnInfo(name = "gender")
     val gender: String,
-
     @ColumnInfo(name = "location_name")
     val locationName: String,
-
     @ColumnInfo(name = "location_url")
     val locationUrl: String,
-
     @ColumnInfo(name = "origin_name")
     val originName: String,
-
     @ColumnInfo(name = "origin_url")
     val originUrl: String,
-
     @ColumnInfo(name = "species")
     val species: String,
-
     @ColumnInfo(name = "status")
     val status: String,
-
     @ColumnInfo(name = "type")
     val type: String,
-
     @ColumnInfo(name = "url")
     val url: String,
-
     @ColumnInfo(name = "is_favorite")
-    val isFavorite: Boolean = false
+    val isFavorite: Boolean = false,
 )

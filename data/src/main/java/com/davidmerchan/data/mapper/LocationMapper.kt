@@ -11,6 +11,6 @@ internal fun LocationDto.toDomain(): Location {
         dimension = dimension,
         residents = residents,
         type = type,
-        url = url
+        url = url,
     )
 }

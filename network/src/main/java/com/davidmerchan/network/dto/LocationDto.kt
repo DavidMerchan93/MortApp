@@ -10,5 +10,5 @@ data class LocationDto(
     val dimension: String? = null,
     val residents: List<String>? = emptyList(),
     val type: String? = null,
-    val url: String? = null
+    val url: String? = null,
 )

@@ -8,7 +8,7 @@ fun interface GetAllCharactersUseCase : suspend (Boolean) -> Result<List<Charact
 
 suspend fun getAllCharacters(
     isRefreshing: Boolean = false,
-    charactersRepository: CharactersRepository
+    charactersRepository: CharactersRepository,
 ): Result<List<Character>> =
     resultOf {
         val response = charactersRepository.getAllCharacters(isRefreshing)

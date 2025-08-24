@@ -16,23 +16,25 @@ import com.davidmerchan.presentation.home.model.CharacterUiModel
 fun CharacterCardComponent(
     modifier: Modifier = Modifier,
     character: CharacterUiModel,
-    onPress: (CharacterId) -> Unit
+    onPress: (CharacterId) -> Unit,
 ) {
     ElevatedCard(
         modifier = modifier,
-        onClick = { onPress(character.id) }
+        onClick = { onPress(character.id) },
     ) {
         AsyncImage(
-            model = ImageRequest.Builder(LocalContext.current)
-                .data(character.image)
-                .crossfade(true)
-                .diskCacheKey(character.id.toString())
-                .memoryCacheKey(character.id.toString())
-                .build(),
+            model =
+                ImageRequest.Builder(LocalContext.current)
+                    .data(character.image)
+                    .crossfade(true)
+                    .diskCacheKey(character.id.toString())
+                    .memoryCacheKey(character.id.toString())
+                    .build(),
             contentDescription = null,
             contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
         )
     }
 }
@@ -41,12 +43,13 @@ fun CharacterCardComponent(
 @Composable
 private fun CharacterCardComponentPreview() {
     CharacterCardComponent(
-        character = CharacterUiModel(
-            id = 1,
-            name = "",
-            image = "https://rickandmortyapi.com/api/character/1",
-            isFavorite = false,
-        ),
-        onPress = {}
+        character =
+            CharacterUiModel(
+                id = 1,
+                name = "",
+                image = "https://rickandmortyapi.com/api/character/1",
+                isFavorite = false,
+            ),
+        onPress = {},
     )
 }

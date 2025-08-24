@@ -15,11 +15,11 @@ data class CharacterDto(
     val species: String,
     val status: String,
     val type: String,
-    val url: String
+    val url: String,
 )
 
 @Serializable
 data class LocationCharacterDto(
     val name: String,
-    val url: String
+    val url: String,
 )

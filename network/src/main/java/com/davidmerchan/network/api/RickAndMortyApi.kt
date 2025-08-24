@@ -10,8 +10,10 @@ import io.ktor.client.plugins.ServerResponseException
 import io.ktor.client.request.get
 import javax.inject.Inject
 
-class RickAndMortyApi @Inject constructor(
-    private val httpClient: HttpClient
+class RickAndMortyApi
+@Inject
+constructor(
+    private val httpClient: HttpClient,
 ) {
     suspend fun getAllCharacters(): CharactersResponseDto {
         return httpClient.get("character").body()

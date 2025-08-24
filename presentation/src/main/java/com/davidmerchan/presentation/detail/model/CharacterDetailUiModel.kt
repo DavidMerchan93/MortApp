@@ -11,5 +11,5 @@ data class CharacterDetailUiModel(
     val location: String,
     val origin: String,
     val species: String,
-    val isFavorite: Boolean
+    val isFavorite: Boolean,
 )

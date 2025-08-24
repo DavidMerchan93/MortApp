@@ -19,16 +19,16 @@ import com.davidmerchan.presentation.R
 fun LoaderComponent(modifier: Modifier = Modifier) {
     Box(
         modifier = modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
+        contentAlignment = Alignment.Center,
     ) {
         val composition by rememberLottieComposition(
-            RawRes(R.raw.morty_dance_loader) // tu JSON en res/raw
+            RawRes(R.raw.morty_dance_loader),
         )
 
         LottieAnimation(
             composition = composition,
             iterations = LottieConstants.IterateForever,
-            modifier = Modifier.size(120.dp)
+            modifier = Modifier.size(120.dp),
         )
     }
 }

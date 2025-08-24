@@ -14,14 +14,15 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CharacterDetailViewModel @Inject constructor(
+class CharacterDetailViewModel
+@Inject
+constructor(
     private val getCharacterDetailUseCase: GetCharacterUseCase,
     private val saveCharacterFavoriteUseCase: SaveCharacterFavoriteUseCase,
-    private val removeCharacterFavoriteUseCase: RemoveCharacterFavoriteUseCase
+    private val removeCharacterFavoriteUseCase: RemoveCharacterFavoriteUseCase,
 ) : BaseViewModel<CharacterDetailContract.State>(
-    CharacterDetailContract.State()
+    CharacterDetailContract.State(),
 ) {
-
     fun handleEvent(event: CharacterDetailContract.Event) {
         when (event) {
             is CharacterDetailContract.Event.FetchData -> fetchData(event.id)
@@ -31,19 +32,19 @@ class CharacterDetailViewModel @Inject constructor(
 
     private fun fetchData(id: CharacterId) {
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
+            state.update { it.copy(isLoading = true) }
             getCharacterDetailUseCase(id).onSuccess {
-                _state.update { state ->
+                state.update { state ->
                     state.copy(
                         isLoading = false,
-                        data = it.toDetailPresentation()
+                        data = it.toDetailPresentation(),
                     )
                 }
             }.onFailure {
-                _state.update { state ->
+                state.update { state ->
                     state.copy(
                         isLoading = false,
-                        isError = true
+                        isError = true,
                     )
                 }
             }
@@ -51,10 +52,10 @@ class CharacterDetailViewModel @Inject constructor(
     }
 
     private fun updateFavoriteState() {
-        val currentState = _state.value.data
+        val currentState = state.value.data
 
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
+            state.update { it.copy(isLoading = true) }
 
             if (currentState?.isFavorite == true) {
                 removeFavorite()
@@ -65,23 +66,23 @@ class CharacterDetailViewModel @Inject constructor(
     }
 
     private fun saveFavorite() {
-        val currentState = _state.value.data
+        val currentState = state.value.data
 
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
+            state.update { it.copy(isLoading = true) }
 
             saveCharacterFavoriteUseCase(currentState?.id!!).onSuccess {
-                _state.update {
+                state.update {
                     it.copy(
                         isLoading = false,
-                        data = currentState.copy(isFavorite = true)
+                        data = currentState.copy(isFavorite = true),
                     )
                 }
             }.onFailure {
-                _state.update {
+                state.update {
                     it.copy(
                         isLoading = false,
-                        data = currentState.copy(isFavorite = currentState.isFavorite)
+                        data = currentState.copy(isFavorite = currentState.isFavorite),
                     )
                 }
             }
@@ -89,23 +90,23 @@ class CharacterDetailViewModel @Inject constructor(
     }
 
     private fun removeFavorite() {
-        val currentState = _state.value.data
+        val currentState = state.value.data
 
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
+            state.update { it.copy(isLoading = true) }
 
             removeCharacterFavoriteUseCase(currentState?.id!!).onSuccess {
-                _state.update {
+                state.update {
                     it.copy(
                         isLoading = false,
-                        data = currentState.copy(isFavorite = false)
+                        data = currentState.copy(isFavorite = false),
                     )
                 }
             }.onFailure {
-                _state.update {
+                state.update {
                     it.copy(
                         isLoading = false,
-                        data = currentState.copy(isFavorite = currentState.isFavorite)
+                        data = currentState.copy(isFavorite = currentState.isFavorite),
                     )
                 }
             }

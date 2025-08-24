@@ -30,7 +30,7 @@ import com.davidmerchan.presentation.detail.viewModel.CharacterDetailViewModel
 internal fun CharacterDetailScreen(
     modifier: Modifier = Modifier,
     characterId: CharacterId,
-    onBackPressed: () -> Unit = {}
+    onBackPressed: () -> Unit = {},
 ) {
     val viewModel = hiltViewModel<CharacterDetailViewModel>()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -50,17 +50,18 @@ internal fun CharacterDetailScreen(
                     IconButton(onClick = onBackPressed) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     }
-                }
+                },
             )
-        }
+        },
     ) { contentPadding ->
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(contentPadding)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(contentPadding),
         ) {
             when {
                 state.isLoading -> {
@@ -70,7 +71,7 @@ internal fun CharacterDetailScreen(
                 (state.data != null) -> {
                     CharacterDetailCard(character = state.data!!, onFavoriteClick = {
                         viewModel.handleEvent(
-                            CharacterDetailContract.Event.UpdateFavorite
+                            CharacterDetailContract.Event.UpdateFavorite,
                         )
                     })
                 }

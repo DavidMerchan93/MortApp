@@ -19,14 +19,14 @@ internal fun CharacterDto.toDomain(): Character {
         species = species,
         status = status,
         type = type,
-        url = url
+        url = url,
     )
 }
 
 internal fun LocationCharacterDto.toDomain(): LocationCharacter {
     return LocationCharacter(
         name = name,
-        url = url
+        url = url,
     )
 }
 
@@ -57,18 +57,20 @@ internal fun CharacterEntity.toDomain(): Character {
         created = created,
         episode = episode.split(","),
         gender = gender,
-        location = LocationCharacter(
-            name = locationName,
-            url = locationUrl
-        ),
-        origin = LocationCharacter(
-            name = originName,
-            url = originUrl
-        ),
+        location =
+            LocationCharacter(
+                name = locationName,
+                url = locationUrl,
+            ),
+        origin =
+            LocationCharacter(
+                name = originName,
+                url = originUrl,
+            ),
         species = species,
         status = status,
         type = type,
         url = url,
-        isFavorite = isFavorite
+        isFavorite = isFavorite,
     )
 }

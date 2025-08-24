@@ -6,6 +6,7 @@ import com.davidmerchan.domain.repository.CharactersRepository
 
 fun interface GetFavoriteCharactersUseCase : suspend () -> Result<List<Character>>
 
-suspend fun getFavoriteCharacters(charactersRepository: CharactersRepository) = resultOf {
-    charactersRepository.getFavoriteCharacters()
-}
+suspend fun getFavoriteCharacters(charactersRepository: CharactersRepository) =
+    resultOf {
+        charactersRepository.getFavoriteCharacters()
+    }

@@ -33,7 +33,7 @@ import com.davidmerchan.presentation.home.viewModel.HomeViewModel
 fun HomeScreen(
     modifier: Modifier = Modifier,
     onCharacterClick: (CharacterId) -> Unit = {},
-    onFavoritesClick: () -> Unit = {}
+    onFavoritesClick: () -> Unit = {},
 ) {
     val viewModel = hiltViewModel<HomeViewModel>()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -49,19 +49,20 @@ fun HomeScreen(
                     IconButton(onClick = onFavoritesClick) {
                         Icon(
                             imageVector = Icons.Filled.Favorite,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     }
-                }
+                },
             )
-        }
+        },
     ) { padding ->
         when {
             state.isLoading -> {
                 Box(
-                    modifier = Modifier
-                        .padding(padding)
-                        .fillMaxSize(),
+                    modifier =
+                        Modifier
+                            .padding(padding)
+                            .fillMaxSize(),
                     contentAlignment = Alignment.Center,
                 ) {
                     LoaderComponent()
@@ -72,11 +73,11 @@ fun HomeScreen(
                 PullToRefreshBox(
                     isRefreshing = state.isRefreshing,
                     onRefresh = { viewModel.handleEvent(HomeStateContract.Event.RefreshData) },
-                    modifier = Modifier.padding(padding)
+                    modifier = Modifier.padding(padding),
                 ) {
                     CharactersListComponent(
                         characters = state.data,
-                        onCharacterClick = onCharacterClick
+                        onCharacterClick = onCharacterClick,
                     )
                 }
             }

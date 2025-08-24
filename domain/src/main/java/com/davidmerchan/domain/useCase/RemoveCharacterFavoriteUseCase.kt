@@ -8,7 +8,7 @@ fun interface RemoveCharacterFavoriteUseCase : suspend (CharacterId) -> Result<U
 
 suspend fun removeCharacterFavorite(
     id: CharacterId,
-    charactersRepository: CharactersRepository
+    charactersRepository: CharactersRepository,
 ) = resultOf {
     charactersRepository.removeCharacterFavorite(id)
 }

@@ -30,7 +30,7 @@ import com.davidmerchan.presentation.home.ui.CharactersListComponent
 fun FavoritesScreen(
     modifier: Modifier = Modifier,
     onCharacterClick: (CharacterId) -> Unit = {},
-    onBackPressed: () -> Unit = {}
+    onBackPressed: () -> Unit = {},
 ) {
     val viewModel = hiltViewModel<FavoritesViewModel>()
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -46,17 +46,18 @@ fun FavoritesScreen(
                     IconButton(onClick = onBackPressed) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = null
+                            contentDescription = null,
                         )
                     }
-                }
+                },
             )
-        }
+        },
     ) { contentPadding ->
         Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(contentPadding)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(contentPadding),
         ) {
             when {
                 state.isLoading -> {
@@ -66,7 +67,7 @@ fun FavoritesScreen(
                 state.data.isNotEmpty() -> {
                     CharactersListComponent(
                         characters = state.data,
-                        onCharacterClick = onCharacterClick
+                        onCharacterClick = onCharacterClick,
                     )
                 }
 

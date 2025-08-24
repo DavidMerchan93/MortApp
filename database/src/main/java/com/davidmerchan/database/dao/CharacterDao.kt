@@ -10,7 +10,6 @@ import com.davidmerchan.database.entities.CharacterEntity
 
 @Dao
 interface CharacterDao {
-
     @Query("SELECT * FROM characters")
     suspend fun getAllCharacters(): List<CharacterEntity>
 
@@ -33,9 +32,11 @@ interface CharacterDao {
     suspend fun deleteCharacter(character: CharacterEntity)
 
     @Query("UPDATE characters SET is_favorite = :isFavorite WHERE id = :id")
-    suspend fun updateFavoriteStatus(id: Int, isFavorite: Boolean)
+    suspend fun updateFavoriteStatus(
+        id: Int,
+        isFavorite: Boolean,
+    )
 
     @Query("DELETE FROM characters")
     suspend fun deleteAllCharacters()
-
 }
