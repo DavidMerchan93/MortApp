@@ -14,9 +14,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.davidmerchan.domain.entities.CharacterId
+import com.davidmerchan.presentation.R
 import com.davidmerchan.presentation.components.EmptyMessageComponent
 import com.davidmerchan.presentation.components.ErrorComponent
 import com.davidmerchan.presentation.components.LoaderComponent
@@ -38,13 +40,13 @@ fun FavoritesScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "Favorite Characters")
+                    Text(text = stringResource(R.string.title_favorites))
                 },
                 navigationIcon = {
                     IconButton(onClick = onBackPressed) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back"
+                            contentDescription = null
                         )
                     }
                 }

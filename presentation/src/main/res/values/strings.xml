@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">MortApp</string>
+
+    <!-- Home -->
+    <string name="title_home">Characters</string>
+
+    <!-- Detail -->
+    <string name="title_character_detail">Character Detail</string>
+    <string name="title_origin">Origen</string>
+    <string name="title_location">Ubicación</string>
+
+    <!-- Favorites -->
+    <string name="title_favorites">Favorite Characters</string>
+
+    <!-- Core -->
+    <string name="message_no_data">No Data Found</string>
+    <string name="message_error_data">Error Loading Data</string>
+
+</resources>

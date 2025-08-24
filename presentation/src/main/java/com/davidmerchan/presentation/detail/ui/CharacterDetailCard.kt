@@ -22,10 +22,12 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.davidmerchan.presentation.R
 import com.davidmerchan.presentation.detail.model.CharacterDetailUiModel
 
 @Composable
@@ -80,12 +82,12 @@ internal fun CharacterDetailCard(
 
             InfoRow(
                 icon = Icons.Default.Place,
-                label = "Origen",
+                label = stringResource(R.string.title_origin),
                 value = character.origin
             )
             InfoRow(
                 icon = Icons.Default.Person,
-                label = "Ubicación",
+                label = stringResource(R.string.title_location),
                 value = character.location
             )
         }
