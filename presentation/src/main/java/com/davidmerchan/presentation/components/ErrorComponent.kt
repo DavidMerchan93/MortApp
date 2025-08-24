@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun ErrorComponent(
-    message: String,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -25,17 +24,11 @@ internal fun ErrorComponent(
             style = MaterialTheme.typography.headlineSmall,
             textAlign = TextAlign.Center
         )
-        Text(
-            text = message,
-            style = MaterialTheme.typography.bodyMedium,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(top = 8.dp)
-        )
     }
 }
 
 @Preview
 @Composable
 private fun ErrorComponentPreview() {
-    ErrorComponent(message = "Error message")
+    ErrorComponent()
 }

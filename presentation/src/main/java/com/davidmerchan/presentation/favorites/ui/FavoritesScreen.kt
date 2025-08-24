@@ -17,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.davidmerchan.domain.entities.CharacterId
+import com.davidmerchan.presentation.components.EmptyMessageComponent
 import com.davidmerchan.presentation.components.ErrorComponent
 import com.davidmerchan.presentation.components.LoaderComponent
 import com.davidmerchan.presentation.favorites.viewModel.FavoritesViewModel
@@ -68,11 +69,11 @@ fun FavoritesScreen(
                 }
 
                 state.data.isEmpty() -> {
-                    EmptyFavoritesMessage()
+                    EmptyMessageComponent()
                 }
 
                 state.isError -> {
-                    ErrorComponent("Error")
+                    ErrorComponent()
                 }
             }
         }

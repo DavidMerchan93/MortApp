@@ -1,4 +1,4 @@
-package com.davidmerchan.presentation.favorites.ui
+package com.davidmerchan.presentation.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -12,29 +12,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-internal fun EmptyFavoritesMessage(
-    modifier: Modifier = Modifier
+internal fun EmptyMessageComponent(
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "No Favorite Characters",
+            text = "No Data Found",
             style = MaterialTheme.typography.headlineSmall,
             textAlign = TextAlign.Center
-        )
-        Text(
-            text = "Add characters to your favorites from the main screen",
-            style = MaterialTheme.typography.bodyMedium,
-            textAlign = TextAlign.Center,
-            modifier = Modifier.padding(top = 8.dp)
         )
     }
 }
 
 @Preview
 @Composable
-private fun EmptyFavoritesMessagePreview() {
-    EmptyFavoritesMessage()
+private fun EmptyMessageComponentPreview() {
+    EmptyMessageComponent()
 }

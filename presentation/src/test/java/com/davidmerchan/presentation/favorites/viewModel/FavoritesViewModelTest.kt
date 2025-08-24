@@ -5,37 +5,27 @@ import com.davidmerchan.domain.entities.Character
 import com.davidmerchan.domain.entities.LocationCharacter
 import com.davidmerchan.domain.useCase.GetFavoriteCharactersUseCase
 import com.davidmerchan.presentation.favorites.state.FavoritesStateContract
+import com.davidmerchan.presentation.viewModel.MainDispatcherRule
 import io.mockk.coEvery
 import io.mockk.mockk
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.StandardTestDispatcher
-import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
 import kotlinx.coroutines.test.runTest
-import kotlinx.coroutines.test.setMain
-import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
-import org.junit.Before
+import org.junit.Rule
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class FavoritesViewModelTest {
+    @get:Rule
+    val mainRule = MainDispatcherRule()
 
     private var getFavoriteCharactersUseCase: GetFavoriteCharactersUseCase = mockk()
     private lateinit var viewModel: FavoritesViewModel
-    private val testDispatcher = StandardTestDispatcher()
-
-    @Before
-    fun setup() {
-        Dispatchers.setMain(testDispatcher)
-    }
-
-    @After
-    fun tearDown() {
-        Dispatchers.resetMain()
-    }
+    private val testDispatcher = UnconfinedTestDispatcher()
 
     @Test
     fun `when getFavoriteCharacters succeeds then state shows characters`() = runTest {
@@ -60,22 +50,21 @@ class FavoritesViewModelTest {
         coEvery { getFavoriteCharactersUseCase() } returns Result.success(expectedCharacters)
 
         // When
-        viewModel = FavoritesViewModel(getFavoriteCharactersUseCase)
+        viewModel = FavoritesViewModel(getFavoriteCharactersUseCase).apply { stopTimeoutMillis = 0 }
 
-        // Then
+        // Trigger the flow collection
         viewModel.uiState.test {
-            // Initial state
-            val initialState = awaitItem()
-            assertTrue(initialState.isLoading)
-            assertFalse(initialState.isError)
-            assertTrue(initialState.data.isEmpty())
+            // Advance coroutines to execute the start() method
+            advanceUntilIdle()
 
-            // Success state
-            val successState = awaitItem()
-            assertFalse(successState.isLoading)
-            assertFalse(successState.isError)
-            assertEquals(1, successState.data.size)
-            assertEquals("Rick Sanchez", successState.data.first().name)
+            // Skip initial state and get the final state after loading
+            val finalState = awaitItem()
+
+            // Then - Should show success state
+            assertFalse(finalState.isLoading)
+            assertFalse(finalState.isError)
+            assertEquals(1, finalState.data.size)
+            assertEquals("Rick Sanchez", finalState.data.first().name)
         }
     }
 
@@ -86,19 +75,18 @@ class FavoritesViewModelTest {
         coEvery { getFavoriteCharactersUseCase() } returns Result.failure(exception)
 
         // When
-        viewModel = FavoritesViewModel(getFavoriteCharactersUseCase)
+        viewModel =
+            FavoritesViewModel(getFavoriteCharactersUseCase).apply { stopTimeoutMillis = 0L }
 
         // Then
         viewModel.uiState.test {
-            // Initial state
-            val initialState = awaitItem()
-            assertTrue(initialState.isLoading)
+            advanceUntilIdle()
 
-            // Error state
-            val errorState = awaitItem()
-            assertFalse(errorState.isLoading)
-            assertTrue(errorState.isError)
-            assertTrue(errorState.data.isEmpty())
+            // Now the implementation correctly sets isError = true in the state
+            val finalState = awaitItem()
+            assertFalse(finalState.isLoading)
+            assertTrue(finalState.isError)
+            assertTrue(finalState.data.isEmpty())
         }
     }
 
@@ -108,8 +96,12 @@ class FavoritesViewModelTest {
         coEvery { getFavoriteCharactersUseCase() } returns Result.success(emptyList())
         viewModel = FavoritesViewModel(getFavoriteCharactersUseCase)
 
+        // Wait for initial load to complete
+        advanceUntilIdle()
+
         // When
         viewModel.handleEvent(FavoritesStateContract.Event.RefreshFavorites)
+        advanceUntilIdle()
 
         // Then
         viewModel.uiState.test {

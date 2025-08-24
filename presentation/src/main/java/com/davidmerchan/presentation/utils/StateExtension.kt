@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.stateIn
 internal fun <Type> Flow<Type>.stateInWhileSubscribed(
     scope: CoroutineScope,
     initialValue: Type,
-    stopTimeoutMillis: Long = 5_000,
+    stopTimeoutMillis: Long,
     onStart: suspend FlowCollector<Type>.() -> Unit = {},
 ): StateFlow<Type> {
     return this

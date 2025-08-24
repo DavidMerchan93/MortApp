@@ -18,7 +18,7 @@ class CharacterDetailViewModel @Inject constructor(
     private val getCharacterDetailUseCase: GetCharacterUseCase,
     private val saveCharacterFavoriteUseCase: SaveCharacterFavoriteUseCase,
     private val removeCharacterFavoriteUseCase: RemoveCharacterFavoriteUseCase
-) : BaseViewModel<CharacterDetailContract.State, CharacterDetailContract.Effect>(
+) : BaseViewModel<CharacterDetailContract.State>(
     CharacterDetailContract.State()
 ) {
 
@@ -40,7 +40,12 @@ class CharacterDetailViewModel @Inject constructor(
                     )
                 }
             }.onFailure {
-                sendEffect(CharacterDetailContract.Effect.ShowError)
+                _state.update { state ->
+                    state.copy(
+                        isLoading = false,
+                        isError = true
+                    )
+                }
             }
         }
     }

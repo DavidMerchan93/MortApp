@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 internal class HomeViewModel @Inject constructor(
     private val getAllCharactersUseCase: GetAllCharactersUseCase
-) : BaseViewModel<HomeStateContract.State, HomeStateContract.Effect>(
+) : BaseViewModel<HomeStateContract.State>(
     initialState = HomeStateContract.State()
 ) {
 
@@ -44,10 +44,10 @@ internal class HomeViewModel @Inject constructor(
                 _state.update { state ->
                     state.copy(
                         isLoading = false,
-                        isRefreshing = false
+                        isRefreshing = false,
+                        isError = true
                     )
                 }
-                sendEffect(HomeStateContract.Effect.ShowError)
             }
         }
     }

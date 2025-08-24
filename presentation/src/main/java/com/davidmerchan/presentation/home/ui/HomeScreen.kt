@@ -19,6 +19,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.davidmerchan.domain.entities.CharacterId
+import com.davidmerchan.presentation.components.EmptyMessageComponent
+import com.davidmerchan.presentation.components.ErrorComponent
 import com.davidmerchan.presentation.components.LoaderComponent
 import com.davidmerchan.presentation.components.PullToRefreshBox
 import com.davidmerchan.presentation.home.state.HomeStateContract
@@ -52,25 +54,37 @@ fun HomeScreen(
             )
         }
     ) { padding ->
-        if (state.isLoading) {
-            Box(
-                modifier = Modifier
-                    .padding(padding)
-                    .fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                LoaderComponent()
+        when {
+            state.isLoading -> {
+                Box(
+                    modifier = Modifier
+                        .padding(padding)
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    LoaderComponent()
+                }
             }
-        } else {
-            PullToRefreshBox(
-                isRefreshing = state.isRefreshing,
-                onRefresh = { viewModel.handleEvent(HomeStateContract.Event.RefreshData) },
-                modifier = Modifier.padding(padding)
-            ) {
-                CharactersListComponent(
-                    characters = state.data,
-                    onCharacterClick = onCharacterClick
-                )
+
+            state.data.isNotEmpty() -> {
+                PullToRefreshBox(
+                    isRefreshing = state.isRefreshing,
+                    onRefresh = { viewModel.handleEvent(HomeStateContract.Event.RefreshData) },
+                    modifier = Modifier.padding(padding)
+                ) {
+                    CharactersListComponent(
+                        characters = state.data,
+                        onCharacterClick = onCharacterClick
+                    )
+                }
+            }
+
+            state.data.isEmpty() -> {
+                EmptyMessageComponent()
+            }
+
+            else -> {
+                ErrorComponent()
             }
         }
     }

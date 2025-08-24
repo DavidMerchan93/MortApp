@@ -13,7 +13,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoritesViewModel @Inject constructor(
     private val getFavoriteCharactersUseCase: GetFavoriteCharactersUseCase
-) : BaseViewModel<FavoritesStateContract.State, FavoritesStateContract.Effect>(
+) : BaseViewModel<FavoritesStateContract.State>(
     initialState = FavoritesStateContract.State()
 ) {
 
@@ -35,11 +35,11 @@ class FavoritesViewModel @Inject constructor(
     }
 
     private fun fetchFavoriteCharacters() {
-        viewModelScope.launch {
-            _state.update { currentState ->
-                currentState.copy(isLoading = true, isError = false)
-            }
+        _state.update { currentState ->
+            currentState.copy(isLoading = true, isError = false)
+        }
 
+        viewModelScope.launch {
             getFavoriteCharactersUseCase().onSuccess { characters ->
                 _state.update { currentState ->
                     currentState.copy(
@@ -49,11 +49,12 @@ class FavoritesViewModel @Inject constructor(
                     )
                 }
             }.onFailure { throwable ->
-                sendEffect(
-                    FavoritesStateContract.Effect.ShowError(
-                        throwable.message ?: "Unknown error"
+                _state.update { currentState ->
+                    currentState.copy(
+                        isLoading = false,
+                        isError = true
                     )
-                )
+                }
             }
         }
     }

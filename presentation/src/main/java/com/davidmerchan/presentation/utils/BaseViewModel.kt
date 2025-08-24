@@ -1,27 +1,27 @@
 package com.davidmerchan.presentation.utils
 
+import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.receiveAsFlow
 
-abstract class BaseViewModel<State, Effect>(
+abstract class BaseViewModel<State>(
     initialState: State
 ) : ViewModel() {
+
+    @VisibleForTesting
+    internal var stopTimeoutMillis: Long = 5_000
+
     protected val _state = MutableStateFlow(initialState)
     val uiState: StateFlow<State> = _state
-        .stateInWhileSubscribed(scope = viewModelScope, initialValue = initialState) {
+        .stateInWhileSubscribed(
+            scope = viewModelScope,
+            initialValue = initialState,
+            stopTimeoutMillis = stopTimeoutMillis
+        ) {
             start()
         }
 
-    protected val channelEffect: Channel<Effect> = Channel()
-    val effect = channelEffect.receiveAsFlow()
-
     protected open fun start() {}
-
-    protected fun sendEffect(effect: Effect) {
-        channelEffect.trySend(effect)
-    }
 }

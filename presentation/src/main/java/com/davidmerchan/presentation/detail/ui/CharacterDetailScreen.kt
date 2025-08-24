@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.davidmerchan.domain.entities.CharacterId
+import com.davidmerchan.presentation.components.ErrorComponent
 import com.davidmerchan.presentation.components.LoaderComponent
 import com.davidmerchan.presentation.detail.state.CharacterDetailContract
 import com.davidmerchan.presentation.detail.viewModel.CharacterDetailViewModel
@@ -73,7 +74,7 @@ internal fun CharacterDetailScreen(
                 }
 
                 state.isError -> {
-                    Text(text = "Error")
+                    ErrorComponent()
                 }
             }
         }
