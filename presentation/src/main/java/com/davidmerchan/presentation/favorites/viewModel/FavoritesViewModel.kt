@@ -40,24 +40,21 @@ class FavoritesViewModel @Inject constructor(
                 currentState.copy(isLoading = true, isError = false)
             }
 
-            getFavoriteCharactersUseCase().fold(
-                onSuccess = { characters ->
-                    _state.update { currentState ->
-                        currentState.copy(
-                            isLoading = false,
-                            data = characters.map { it.toPresentation() },
-                            isError = false
-                        )
-                    }
-                },
-                onFailure = { throwable ->
-                    sendEffect(
-                        FavoritesStateContract.Effect.ShowError(
-                            throwable.message ?: "Unknown error"
-                        )
+            getFavoriteCharactersUseCase().onSuccess { characters ->
+                _state.update { currentState ->
+                    currentState.copy(
+                        isLoading = false,
+                        data = characters.map { it.toPresentation() },
+                        isError = false
                     )
                 }
-            )
+            }.onFailure { throwable ->
+                sendEffect(
+                    FavoritesStateContract.Effect.ShowError(
+                        throwable.message ?: "Unknown error"
+                    )
+                )
+            }
         }
     }
 }
