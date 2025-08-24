@@ -18,7 +18,7 @@ interface CharacterDao {
     suspend fun getCharacterById(id: Int): CharacterEntity?
 
     @Query("SELECT * FROM characters WHERE is_favorite = 1")
-    fun getFavoriteCharacters(): List<CharacterEntity>
+    suspend fun getFavoriteCharacters(): List<CharacterEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCharacters(characters: List<CharacterEntity>)

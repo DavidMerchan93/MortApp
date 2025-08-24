@@ -32,7 +32,15 @@ class CharactersRepositoryImpl @Inject constructor(
 
     override suspend fun getCharacter(id: Int): Result<Character> {
         return safeApiCall {
-            api.getCharacter(id).toDomain()
+            val character = database.getCharacterById(id)
+
+            if (character == null) {
+                val result = api.getCharacter(id)
+                database.insertCharacter(result.toDatabaseEntity())
+                result.toDomain()
+            } else {
+                character.toDomain()
+            }
         }
     }
 

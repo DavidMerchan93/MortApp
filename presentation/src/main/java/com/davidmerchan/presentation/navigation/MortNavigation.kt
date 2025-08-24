@@ -6,6 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.davidmerchan.presentation.detail.ui.CharacterDetailScreen
+import com.davidmerchan.presentation.favorites.ui.FavoritesScreen
 import com.davidmerchan.presentation.home.ui.HomeScreen
 
 @Composable
@@ -22,6 +23,9 @@ fun MortNavigation(
                     navController.navigate(
                         NavigationRoutes.CharacterDetail(characterId)
                     )
+                },
+                onFavoritesClick = {
+                    navController.navigate(NavigationRoutes.Favorites)
                 }
             )
         }
@@ -37,7 +41,16 @@ fun MortNavigation(
         }
 
         composable<NavigationRoutes.Favorites> {
-            // TODO: Implement FavoritesScreen
+            FavoritesScreen(
+                onCharacterClick = { characterId ->
+                    navController.navigate(
+                        NavigationRoutes.CharacterDetail(characterId)
+                    )
+                },
+                onBackPressed = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }

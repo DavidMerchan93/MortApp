@@ -20,4 +20,8 @@ abstract class BaseViewModel<State, Effect>(
     val effect = channelEffect.receiveAsFlow()
 
     protected open fun start() {}
+
+    protected fun sendEffect(effect: Effect) {
+        channelEffect.trySend(effect)
+    }
 }
