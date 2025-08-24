@@ -23,7 +23,7 @@ object UseCaseModule {
     @Provides
     @Singleton
     fun provideGetAllCharactersUseCase(charactersRepository: CharactersRepository): GetAllCharactersUseCase {
-        return GetAllCharactersUseCase { getAllCharacters(charactersRepository) }
+        return GetAllCharactersUseCase { getAllCharacters(charactersRepository = charactersRepository) }
     }
 
     @Provides

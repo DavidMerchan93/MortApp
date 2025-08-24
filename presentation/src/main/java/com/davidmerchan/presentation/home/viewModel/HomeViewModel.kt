@@ -24,23 +24,30 @@ internal class HomeViewModel @Inject constructor(
 
     fun handleEvent(event: HomeStateContract.Event) {
         when (event) {
-            HomeStateContract.Event.FetchData -> fetchData()
+            HomeStateContract.Event.RefreshData -> fetchData(true)
         }
     }
 
-    private fun fetchData() {
+    private fun fetchData(isRefreshing: Boolean = false) {
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
+            _state.update { it.copy(isLoading = true, isRefreshing = isRefreshing) }
 
-            getAllCharactersUseCase().onSuccess { response ->
+            getAllCharactersUseCase(isRefreshing).onSuccess { response ->
                 _state.update { state ->
                     state.copy(
                         isLoading = false,
+                        isRefreshing = false,
                         data = response.map { it.toPresentation() }
                     )
                 }
             }.onFailure {
-                channelEffect.send(HomeStateContract.Effect.ShowError)
+                _state.update { state ->
+                    state.copy(
+                        isLoading = false,
+                        isRefreshing = false
+                    )
+                }
+                sendEffect(HomeStateContract.Effect.ShowError)
             }
         }
     }

@@ -4,7 +4,7 @@ import com.davidmerchan.domain.entities.Character
 import com.davidmerchan.domain.entities.CharacterId
 
 interface CharactersRepository {
-    suspend fun getAllCharacters(hasSaveLocal: Boolean = false): Result<List<Character>>
+    suspend fun getAllCharacters(isRefreshing: Boolean = false): Result<List<Character>>
     suspend fun getCharacter(id: CharacterId): Result<Character>
     suspend fun getFavoriteCharacters(): List<Character>
     suspend fun saveCharacterFavorite(id: CharacterId)

@@ -20,6 +20,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.davidmerchan.domain.entities.CharacterId
 import com.davidmerchan.presentation.components.LoaderComponent
+import com.davidmerchan.presentation.components.PullToRefreshBox
+import com.davidmerchan.presentation.home.state.HomeStateContract
 import com.davidmerchan.presentation.home.viewModel.HomeViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -50,15 +52,21 @@ fun HomeScreen(
             )
         }
     ) { padding ->
-        Box(
-            modifier = Modifier
-                .padding(padding)
-                .fillMaxSize(),
-            contentAlignment = Alignment.Center,
-        ) {
-            if (state.isLoading) {
+        if (state.isLoading) {
+            Box(
+                modifier = Modifier
+                    .padding(padding)
+                    .fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
                 LoaderComponent()
-            } else {
+            }
+        } else {
+            PullToRefreshBox(
+                isRefreshing = state.isRefreshing,
+                onRefresh = { viewModel.handleEvent(HomeStateContract.Event.RefreshData) },
+                modifier = Modifier.padding(padding)
+            ) {
                 CharactersListComponent(
                     characters = state.data,
                     onCharacterClick = onCharacterClick

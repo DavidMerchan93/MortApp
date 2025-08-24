@@ -6,11 +6,12 @@ internal sealed interface HomeStateContract {
     data class State(
         val isLoading: Boolean = false,
         val data: List<CharacterUiModel> = emptyList(),
-        val isError: Boolean = false
+        val isError: Boolean = false,
+        val isRefreshing: Boolean = false,
     )
 
     sealed interface Event {
-        object FetchData : Event
+        object RefreshData : Event
     }
 
     sealed interface Effect {

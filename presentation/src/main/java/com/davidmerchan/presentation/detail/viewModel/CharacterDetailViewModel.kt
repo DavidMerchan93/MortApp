@@ -40,7 +40,7 @@ class CharacterDetailViewModel @Inject constructor(
                     )
                 }
             }.onFailure {
-                channelEffect.send(CharacterDetailContract.Effect.ShowError)
+                sendEffect(CharacterDetailContract.Effect.ShowError)
             }
         }
     }
@@ -69,14 +69,14 @@ class CharacterDetailViewModel @Inject constructor(
                 _state.update {
                     it.copy(
                         isLoading = false,
-                        data = currentState?.copy(isFavorite = true)
+                        data = currentState.copy(isFavorite = true)
                     )
                 }
             }.onFailure {
                 _state.update {
                     it.copy(
                         isLoading = false,
-                        data = currentState?.copy(isFavorite = currentState.isFavorite)
+                        data = currentState.copy(isFavorite = currentState.isFavorite)
                     )
                 }
             }

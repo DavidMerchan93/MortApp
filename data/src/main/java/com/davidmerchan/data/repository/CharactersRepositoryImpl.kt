@@ -14,11 +14,11 @@ class CharactersRepositoryImpl @Inject constructor(
     private val api: RickAndMortyApi,
     private val database: CharacterDao
 ) : CharactersRepository {
-    override suspend fun getAllCharacters(hasSaveLocal: Boolean): Result<List<Character>> {
+    override suspend fun getAllCharacters(isRefreshing: Boolean): Result<List<Character>> {
         return safeApiCall {
             val characters = database.getAllCharacters().map { it.toDomain() }
 
-            if (hasSaveLocal || characters.isEmpty()) {
+            if (isRefreshing || characters.isEmpty()) {
                 val results = api.getAllCharacters().results
                 database.insertCharacters(
                     results.map { it.toDatabaseEntity() }
