@@ -37,7 +37,8 @@ class CharactersRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getFavoriteCharacters(): List<Character> {
-        TODO("Not yet implemented")
+        val result = database.getFavoriteCharacters()
+        return result.map { it.toDomain() }
     }
 
     override suspend fun saveCharacterFavorite(id: CharacterId) {

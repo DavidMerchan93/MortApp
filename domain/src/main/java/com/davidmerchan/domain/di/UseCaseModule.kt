@@ -3,10 +3,12 @@ package com.davidmerchan.domain.di
 import com.davidmerchan.domain.repository.CharactersRepository
 import com.davidmerchan.domain.useCase.GetAllCharactersUseCase
 import com.davidmerchan.domain.useCase.GetCharacterUseCase
+import com.davidmerchan.domain.useCase.GetFavoriteCharactersUseCase
 import com.davidmerchan.domain.useCase.RemoveCharacterFavoriteUseCase
 import com.davidmerchan.domain.useCase.SaveCharacterFavoriteUseCase
 import com.davidmerchan.domain.useCase.getAllCharacters
 import com.davidmerchan.domain.useCase.getCharacter
+import com.davidmerchan.domain.useCase.getFavoriteCharacters
 import com.davidmerchan.domain.useCase.removeCharacterFavorite
 import com.davidmerchan.domain.useCase.saveCharacterFavorite
 import dagger.Module
@@ -54,6 +56,14 @@ object UseCaseModule {
                 charactersRepository
             )
         }
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetFavoriteCharactersUseCase(
+        charactersRepository: CharactersRepository
+    ): GetFavoriteCharactersUseCase {
+        return GetFavoriteCharactersUseCase { getFavoriteCharacters(charactersRepository) }
     }
 
 }

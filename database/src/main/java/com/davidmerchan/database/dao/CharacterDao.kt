@@ -7,7 +7,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.davidmerchan.database.entities.CharacterEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CharacterDao {
@@ -19,7 +18,7 @@ interface CharacterDao {
     suspend fun getCharacterById(id: Int): CharacterEntity?
 
     @Query("SELECT * FROM characters WHERE is_favorite = 1")
-    fun getFavoriteCharacters(): Flow<List<CharacterEntity>>
+    fun getFavoriteCharacters(): List<CharacterEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCharacters(characters: List<CharacterEntity>)
