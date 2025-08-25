@@ -37,14 +37,16 @@ class GetAllCharactersUseCaseTest {
                         created = "2017-11-04T18:48:46.250Z",
                         episode = listOf("https://rickandmortyapi.com/api/episode/1"),
                         gender = "Male",
-                        location = LocationCharacter(
-                            "Earth",
-                            "https://rickandmortyapi.com/api/location/1"
-                        ),
-                        origin = LocationCharacter(
-                            "Earth",
-                            "https://rickandmortyapi.com/api/location/1"
-                        ),
+                        location =
+                            LocationCharacter(
+                                "Earth",
+                                "https://rickandmortyapi.com/api/location/1",
+                            ),
+                        origin =
+                            LocationCharacter(
+                                "Earth",
+                                "https://rickandmortyapi.com/api/location/1",
+                            ),
                         species = "Human",
                         status = "Alive",
                         type = "",
@@ -70,9 +72,10 @@ class GetAllCharactersUseCaseTest {
         runTest {
             // Given
             val exception = Exception("Network error")
-            coEvery { charactersRepository.getAllCharacters(false) } returns Result.failure(
-                exception
-            )
+            coEvery { charactersRepository.getAllCharacters(false) } returns
+                Result.failure(
+                    exception,
+                )
 
             // When
             val result = getAllCharactersUseCase(false)
