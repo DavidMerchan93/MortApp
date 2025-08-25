@@ -5,11 +5,19 @@ on:
         branches: [ main, develop ]
     pull_request:
         branches: [ main, develop ]
+    workflow_dispatch:
+
+concurrency:
+    group: build-${{ github.ref }}
+    cancel-in-progress: true
 
 jobs:
     build:
         name: Build APK
         runs-on: ubuntu-latest
+        timeout-minutes: 30
+        permissions:
+            contents: read
 
         steps:
             -   name: Checkout code
@@ -19,7 +27,7 @@ jobs:
                 uses: actions/setup-java@v4
                 with:
                     java-version: '17'
-                    distribution: 'temurin'
+                    distribution: temurin
 
             -   name: Setup Gradle
                 uses: gradle/actions/setup-gradle@v3
@@ -28,4 +36,11 @@ jobs:
                 run: chmod +x ./gradlew
 
             -   name: Build Debug APK
-                run: ./gradlew assembleDebug
+                run: ./gradlew :app:assembleDebug --stacktrace --no-daemon
+
+            -   name: Upload debug APK
+                uses: actions/upload-artifact@v4
+                with:
+                    name: app-debug
+                    path: '**/build/outputs/apk/debug/*.apk'
+                    retention-days: 7
