@@ -71,6 +71,13 @@ This project follows **Clean Architecture** principles with a multi-module struc
 - ✅ **Modern UI**: Material Design with Jetpack Compose
 - ✅ **Error Handling**: Comprehensive error states and retry mechanisms
 
+## Media
+<img width="580" height="1880" alt="Screenshot_1756141121" src="https://github.com/user-attachments/assets/d728142f-4bfc-44ef-b759-2074101508fb" />
+<img width="1080" height="2280" alt="Screenshot_1756141138" src="https://github.com/user-attachments/assets/41b7333f-2a78-4811-a9a4-2febee54d467" />
+<img width="1080" height="2280" alt="Screenshot_1756141144" src="https://github.com/user-attachments/assets/dfcea2cd-8c69-4da5-a4bb-359bbd9b4f82" />
+<img width="1080" height="2280" alt="Screenshot_1756141152" src="https://github.com/user-attachments/assets/f897a909-7e4a-43d2-9f68-d3001a9b40fe" />
+
+
 ## 🚀 Getting Started
 
 ### Prerequisites
