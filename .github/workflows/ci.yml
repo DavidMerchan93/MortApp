@@ -77,8 +77,7 @@ jobs:
                         let comment = '## 🤖 CI Results\n\n';
 
                         // Check if ktlint passed
-                        const ktlintExitCode = ${{ job.status == 'success' ? '0' : '1' }};
-                        if (ktlintExitCode === '0') {
+                        if job.status == 'success') {
                           comment += '✅ **KtLint**: All checks passed\n';
                         } else {
                           comment += '❌ **KtLint**: Style violations found\n';
