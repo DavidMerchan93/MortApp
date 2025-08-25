@@ -77,6 +77,8 @@ This project follows **Clean Architecture** principles with a multi-module struc
 <img width="380" height="1680" alt="Screenshot_1756141144" src="https://github.com/user-attachments/assets/dfcea2cd-8c69-4da5-a4bb-359bbd9b4f82" />
 <img width="380" height="1680" alt="Screenshot_1756141152" src="https://github.com/user-attachments/assets/f897a909-7e4a-43d2-9f68-d3001a9b40fe" />
 
+### Video
+https://drive.google.com/file/d/1sitzOyOkuH3nh5ejXR8wPaGZSXlXNfPS/view?usp=sharing
 
 ## 🚀 Getting Started
 
