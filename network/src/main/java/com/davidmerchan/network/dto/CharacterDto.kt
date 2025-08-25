@@ -2,6 +2,9 @@ package com.davidmerchan.network.dto
 
 import kotlinx.serialization.Serializable
 
+/**
+ * Character Data Transfer Object
+ */
 @Serializable
 data class CharacterDto(
     val id: Int,
@@ -18,6 +21,9 @@ data class CharacterDto(
     val url: String,
 )
 
+/**
+ * Location Character Data Transfer Object
+ */
 @Serializable
 data class LocationCharacterDto(
     val name: String,

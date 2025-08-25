@@ -243,27 +243,8 @@ The app uses the Rick and Morty API (no authentication required):
 - Base URL: `https://rickandmortyapi.com/api/`
 - Endpoints: Characters, locations, episodes
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/your-feature`
-3. Run quality checks: `./gradlew codeQuality`
-4. Commit changes: `git commit -m 'Add some feature'`
-5. Push to branch: `git push origin feature/your-feature`
-6. Open a Pull Request
-
-The CI pipeline will automatically run quality checks on your PR.
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🌟 Acknowledgments
-
-- [Rick and Morty API](https://rickandmortyapi.com/) for providing the data
-- Android development community for best practices
-- Clean Architecture principles by Robert C. Martin
-
----
 
 **Happy coding!** 🚀

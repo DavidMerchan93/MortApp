@@ -4,6 +4,15 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+/**
+ * Room Entity representing a Character in the local SQLite database.
+ *
+ * This data class defines the database schema for storing character information
+ * from the Rick and Morty API. It serves as the local cache representation of
+ * character data, enabling offline access and improved performance through
+ * local storage.
+ *
+ */
 @Entity(tableName = "characters")
 data class CharacterEntity(
     @PrimaryKey
